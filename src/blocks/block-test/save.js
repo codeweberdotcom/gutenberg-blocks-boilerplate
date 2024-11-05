@@ -1,11 +1,22 @@
-// import { __ } from '@wordpress/i18n';
 import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 export default function save({ attributes }) {
-	const { content, color } = attributes;
+	const {
+		buttonText = 'Default Text',
+		buttonSize = 'medium',
+		buttonColor = 'primary',
+		buttonShape = '',
+		buttonType = 'default', // Новый параметр buttonType
+	} = attributes;
+
 	return (
 		<div {...useBlockProps.save()}>
-			<RichText.Content tagName="h4" value={content} style={{ color }} />
+			<a
+				href="#"
+				className={`btn btn-${buttonSize} btn-${buttonColor} ${buttonShape} btn-type-${buttonType}`}
+			>
+				<RichText.Content tagName="span" value={buttonText} />
+			</a>
 		</div>
 	);
 }

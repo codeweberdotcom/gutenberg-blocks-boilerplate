@@ -1,50 +1,41 @@
-import { __ } from '@wordpress/i18n';
-import {
-	useBlockProps,
-	InspectorControls,
-	RichText,
-} from '@wordpress/block-editor';
-import { PanelBody, ColorPalette } from '@wordpress/components';
-const { Fragment } = wp.element;
+import { useBlockProps } from '@wordpress/block-editor';
+import CustomButton from '../../utilities/button';
 
-// editor style
-import './editor.scss';
+const Edit = ({ attributes, setAttributes }) => {
+	const {
+		buttonText = 'Default Text',
+		buttonSize = 'medium',
+		buttonColor = 'primary',
+		buttonShape = '',
+		buttonStyle = 'default',
+		buttonType = 'default', // Новый параметр buttonType
+	} = attributes;
 
-// colors
-import colors from '../../utilities/colors-palette';
+	const setButtonText = (text) => setAttributes({ buttonText: text });
+	const setButtonSize = (size) => setAttributes({ buttonSize: size });
+	const setButtonColor = (color) => setAttributes({ buttonColor: color });
+	const setButtonShape = (shape) => setAttributes({ buttonShape: shape });
+	const setButtonStyle = (style) => setAttributes({ buttonStyle: style });
+	const setButtonType = (type) => setAttributes({ buttonType: type }); // Новый обработчик для типа кнопки
 
-export default function Edit({ attributes, setAttributes }) {
-	const { content, color } = attributes;
 	return (
-		<Fragment>
-			<InspectorControls>
-				<PanelBody
-					title={__('Settings', 'boilerplate')}
-					initialOpen={true}
-				>
-					<p className="custom__editor__label">
-						{__('Text Color', 'boilerplate')}
-					</p>
-					<ColorPalette
-						colors={colors}
-						value={color}
-						onChange={(newColor) =>
-							setAttributes({ color: newColor })
-						}
-					/>
-				</PanelBody>
-			</InspectorControls>
-
-			<div {...useBlockProps()}>
-				<RichText
-					tagName="h4"
-					value={content}
-					onChange={(newContent) =>
-						setAttributes({ content: newContent })
-					}
-					style={{ color }}
-				/>
-			</div>
-		</Fragment>
+		<div {...useBlockProps()}>
+			<CustomButton
+				text={buttonText}
+				onChangeText={setButtonText}
+				buttonSize={buttonSize}
+				onChangeSize={setButtonSize}
+				buttonColor={buttonColor}
+				onChangeColor={setButtonColor}
+				buttonShape={buttonShape}
+				onChangeShape={setButtonShape}
+				buttonStyle={buttonStyle}
+				onChangeStyle={setButtonStyle}
+				buttonType={buttonType} // Передаем тип кнопки
+				onChangeType={setButtonType} // Обработчик для типа кнопки
+			/>
+		</div>
 	);
-}
+};
+
+export default Edit;

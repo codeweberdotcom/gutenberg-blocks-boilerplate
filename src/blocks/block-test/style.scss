@@ -7,3 +7,9 @@
 	color: #fff;
 	padding: 2px;
 }
+
+
+/* Добавляем нижний отступ к группе кнопок */
+.components-button-group {
+    margin-bottom: 16px!important; /* Установите желаемое значение отступа */
+}
