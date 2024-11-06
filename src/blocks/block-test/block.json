@@ -29,11 +29,15 @@
         },
         "buttonStyle": {
             "type": "string",
-            "default": "default"
+            "default": "solid"
         },
         "buttonType": {
             "type": "string",
-            "default": "default"
+            "default": "solid"
+        },
+        "buttonIconPosition": {
+            "type": "string",
+            "default": "left"
         }
     },
     "textdomain": "naviddev-gutenberg-blocks",
