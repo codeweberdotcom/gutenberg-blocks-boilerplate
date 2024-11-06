@@ -5,18 +5,21 @@ import {
 	ButtonGroup,
 	SelectControl,
 	ToggleControl,
+	ComboboxControl,
+	TextControl,
 } from '@wordpress/components';
 import { InspectorControls, RichText } from '@wordpress/block-editor';
 import { colors } from './colors';
 import { shapes } from './shapes';
-import { gradientcolors } from './gradient_colors'; // Импортируем список градиентов
-import { fontIcons } from './font_icon'; // Импортируем список иконок
+import { gradientcolors } from './gradient_colors';
+import { fontIcons } from './font_icon';
+import { fontIconsSocial } from './font_icon_social'; // Импорт для социальных иконок
+import { useState } from 'react';
 
-// Добавьте доступные варианты типов кнопок
 const buttonTypes = [
 	{ label: __('Solid', 'naviddev-gutenberg-blocks'), value: 'solid' },
 	{ label: __('Circle', 'naviddev-gutenberg-blocks'), value: 'circle' },
-	{ label: __('Social', 'naviddev-gutenberg-blocks'), value: 'social' },
+	{ label: __('Social', 'naviddev-gutenberg-blocks'), value: 'social' }, // Тип Social
 	{ label: __('Icon', 'naviddev-gutenberg-blocks'), value: 'icon' },
 	{ label: __('Expand', 'naviddev-gutenberg-blocks'), value: 'expand' },
 	{ label: __('Play', 'naviddev-gutenberg-blocks'), value: 'play' },
@@ -31,6 +34,23 @@ const buttonStyles = [
 		label: __('Outline Gradient', 'naviddev-gutenberg-blocks'),
 		value: 'outline-gradient',
 	},
+];
+
+const linkTypes = [
+	{
+		label: __('External URL', 'naviddev-gutenberg-blocks'),
+		value: 'external',
+	},
+	{
+		label: __('Internal URL', 'naviddev-gutenberg-blocks'),
+		value: 'internal',
+	},
+	{ label: __('Modal', 'naviddev-gutenberg-blocks'), value: 'modal' },
+	{ label: __('Form', 'naviddev-gutenberg-blocks'), value: 'form' },
+	{ label: __('Video', 'naviddev-gutenberg-blocks'), value: 'video' },
+	{ label: __('YouTube', 'naviddev-gutenberg-blocks'), value: 'youtube' },
+	{ label: __('Rutube', 'naviddev-gutenberg-blocks'), value: 'rutube' },
+	{ label: __('VK Video', 'naviddev-gutenberg-blocks'), value: 'vk_video' },
 ];
 
 const CustomButton = ({
@@ -52,16 +72,32 @@ const CustomButton = ({
 	onChangeIconClass,
 	buttonIconPosition,
 	onChangeIconPosition,
+	SocialIcon,
+	onChangeSocialIcon,
 }) => {
-	const isOutline = buttonStyle === 'outline';
-	const isOutlineGradient = buttonStyle === 'outline-gradient';
-	const isSoft = buttonStyle === 'soft';
-	const isGradient = buttonStyle === 'gradient';
+	const [linkType, setLinkType] = useState('external');
+	const [externalUrl, setExternalUrl] = useState('');
+	const [internalUrl, setInternalUrl] = useState('');
+	const [socialIcon, setSocialIcon] = useState(SocialIcon || '');
+
+	const handleLinkTypeChange = (value) => {
+		setLinkType(value);
+		// Clear URL fields when changing link type
+		setExternalUrl('');
+		setInternalUrl('');
+	};
+
 	const isSolidOrOutlineOrSoft = ['solid', 'outline', 'soft'].includes(
 		buttonStyle
 	);
+	const isExpandOrPlay = buttonType === 'expand' || buttonType === 'play';
+	const isGradientOrOutlineGradient = [
+		'gradient',
+		'outline-gradient',
+	].includes(buttonStyle);
+	const isIcon = buttonType === 'icon';
+	const isSocial = buttonType === 'social'; // Проверка, выбран ли тип Social
 
-	// Функция для формирования классов кнопки
 	const buttonClasses = ({
 		buttonSize,
 		buttonColor,
@@ -74,50 +110,38 @@ const CustomButton = ({
 	}) => {
 		const classes = ['btn'];
 
-		// Добавляем размер кнопки, если не выбран тип expand или play
 		if (buttonSize && buttonType !== 'expand' && buttonType !== 'play') {
 			classes.push(buttonSize);
 		}
 
-		// Добавляем стиль кнопки
-		if (buttonStyle) {
-			if (buttonStyle === 'outline') {
+		switch (buttonStyle) {
+			case 'outline':
 				classes.push(`btn-outline-${buttonColor}`);
-			} else if (buttonStyle === 'gradient') {
-				// Если выбран стиль Gradient, добавляем два класса
-				classes.push('btn-gradient'); // Добавляем базовый класс
-				if (buttonGradient) {
-					// Убедитесь, что класс добавляется правильно в формате 'gradient-1'
-					classes.push(buttonGradient); // Это будет что-то вроде 'gradient-1'
-				}
-			} else if (buttonStyle === 'outline-gradient') {
-				// Если выбран стиль Outline Gradient, добавляем два класса
-				classes.push('btn-outline-gradient'); // Базовый класс для Outline Gradient
-				if (buttonGradient) {
-					// Убедитесь, что класс добавляется правильно в формате 'gradient-1'
-					classes.push(buttonGradient); // Это будет что-то вроде 'gradient-1'
-				}
-			} else if (buttonStyle === 'soft') {
+				break;
+			case 'gradient':
+				classes.push('btn-gradient', buttonGradient);
+				break;
+			case 'outline-gradient':
+				classes.push('btn-outline-gradient', buttonGradient);
+				break;
+			case 'soft':
 				classes.push(`btn-soft-${buttonColor}`);
-			} else {
+				break;
+			default:
 				classes.push(`btn-${buttonColor}`);
-			}
 		}
 
-		// Добавляем форму кнопки
 		if (buttonShape) {
 			classes.push(buttonShape);
 		}
 
-		// Добавляем тип кнопки
-		if (buttonType) {
+		// Для кнопки типа social добавляем класс btn-[socialIcon]
+		if (isSocial && socialIcon) {
+			classes.push('btn-circle', `btn-${socialIcon}`);
+		} else {
 			switch (buttonType) {
 				case 'icon':
 					classes.push('btn-icon');
-					if (iconClass) {
-						classes.push(iconClass); // Добавляем класс иконки, если он выбран
-					}
-					// Устанавливаем класс в зависимости от положения иконки
 					classes.push(
 						buttonIconPosition === 'right'
 							? 'btn-icon-end'
@@ -131,6 +155,8 @@ const CustomButton = ({
 					classes.push('btn-expand', 'rounded-pill');
 					break;
 				case 'social':
+					classes.push('btn-circle');
+					break;
 				case 'circle':
 					classes.push('btn-circle');
 					break;
@@ -142,19 +168,12 @@ const CustomButton = ({
 		return classes.join(' ');
 	};
 
-	const isExpandOrPlay = buttonType === 'expand' || buttonType === 'play';
-	const isGradientOrOutlineGradient =
-		buttonStyle === 'gradient' || buttonStyle === 'outline-gradient';
-
-	const isIcon = buttonType === 'icon';
-
 	return (
 		<>
 			<InspectorControls>
 				<PanelBody
 					title={__('Button Settings', 'naviddev-gutenberg-blocks')}
 				>
-					{/* Переместили SelectControl для Button Type на верх */}
 					<SelectControl
 						label={__('Button Type', 'naviddev-gutenberg-blocks')}
 						value={buttonType}
@@ -162,7 +181,52 @@ const CustomButton = ({
 						onChange={onChangeType}
 					/>
 
-					{/* Скрываем метку "Size Button" и кнопки размера для 'expand' и 'play' */}
+					{isSocial && (
+						<>
+							<ComboboxControl // Используем ComboboxControl для выбора социальной иконки
+								label={__(
+									'Social Icon',
+									'naviddev-gutenberg-blocks'
+								)}
+								value={socialIcon}
+								options={fontIconsSocial} // Используем социальные иконки
+								onChange={(value) => {
+									setSocialIcon(value);
+									if (onChangeSocialIcon) {
+										onChangeSocialIcon(value); // Обновляем родительское состояние
+									}
+								}}
+							/>
+							<p>
+								{__(
+									'Style Social',
+									'naviddev-gutenberg-blocks'
+								)}
+							</p>
+							{/* Добавляем кнопки для выбора стилей при типе кнопки "Social" */}
+							<ButtonGroup>
+								<WpButton
+									isPrimary={buttonStyle === 'style1'}
+									onClick={() => onChangeStyle('style1')}
+								>
+									{__('Style 1', 'naviddev-gutenberg-blocks')}
+								</WpButton>
+								<WpButton
+									isPrimary={buttonStyle === 'style2'}
+									onClick={() => onChangeStyle('style2')}
+								>
+									{__('Style 2', 'naviddev-gutenberg-blocks')}
+								</WpButton>
+								<WpButton
+									isPrimary={buttonStyle === 'style3'}
+									onClick={() => onChangeStyle('style3')}
+								>
+									{__('Style 3', 'naviddev-gutenberg-blocks')}
+								</WpButton>
+							</ButtonGroup>
+						</>
+					)}
+
 					{!isExpandOrPlay && (
 						<>
 							<p>
@@ -193,41 +257,25 @@ const CustomButton = ({
 
 					<p>{__('Button Style', 'naviddev-gutenberg-blocks')}</p>
 					<ButtonGroup>
-						<WpButton
-							isPrimary={buttonStyle === 'solid'}
-							onClick={() => onChangeStyle('solid')}
-						>
-							Solid
-						</WpButton>
-						<WpButton
-							isPrimary={buttonStyle === 'outline'}
-							onClick={() => onChangeStyle('outline')}
-						>
-							Outline
-						</WpButton>
-						<WpButton
-							isPrimary={buttonStyle === 'soft'}
-							onClick={() => onChangeStyle('soft')}
-						>
-							Soft
-						</WpButton>
-						<WpButton
-							isPrimary={buttonStyle === 'gradient'}
-							onClick={() => onChangeStyle('gradient')}
-							disabled={isExpandOrPlay} // Делаем неактивным при выборе Expand или Play
-						>
-							Gradient
-						</WpButton>
-						<WpButton
-							isPrimary={buttonStyle === 'outline-gradient'}
-							onClick={() => onChangeStyle('outline-gradient')}
-							disabled={isExpandOrPlay} // Делаем неактивным при выборе Expand или Play
-						>
-							Outline Gradient
-						</WpButton>
+						{buttonStyles.map(({ label, value }) => (
+							<WpButton
+								key={value}
+								isPrimary={buttonStyle === value}
+								onClick={() => onChangeStyle(value)}
+								disabled={
+									isExpandOrPlay &&
+									[
+										'gradient',
+										'outline-gradient',
+										'outline',
+									].includes(value)
+								}
+							>
+								{label}
+							</WpButton>
+						))}
 					</ButtonGroup>
 
-					{/* Скрываем метку и выбор формы кнопки для 'expand' и 'play' */}
 					<SelectControl
 						label={__('Button Shape', 'naviddev-gutenberg-blocks')}
 						value={buttonShape}
@@ -236,7 +284,6 @@ const CustomButton = ({
 						disabled={isExpandOrPlay}
 					/>
 
-					{/* Показываем выпадающий список для цвета кнопки только для стилей Solid, Soft и Outline */}
 					{isSolidOrOutlineOrSoft && (
 						<SelectControl
 							label={__(
@@ -249,7 +296,6 @@ const CustomButton = ({
 						/>
 					)}
 
-					{/* Показываем выпадающий список для градиента, только если выбран стиль Gradient или Outline Gradient */}
 					{isGradientOrOutlineGradient && (
 						<SelectControl
 							label={__(
@@ -262,10 +308,9 @@ const CustomButton = ({
 						/>
 					)}
 
-					{/* Добавляем иконку и переключатель, объединенные в одну группу, только если выбран тип кнопки "icon" */}
 					{isIcon && (
 						<div className="icon-group">
-							<SelectControl
+							<ComboboxControl
 								label={__('Icon', 'naviddev-gutenberg-blocks')}
 								value={iconClass}
 								options={fontIcons}
@@ -287,10 +332,40 @@ const CustomButton = ({
 							/>
 						</div>
 					)}
+
+					{/* New link type select */}
+					<SelectControl
+						label={__('Link Type', 'naviddev-gutenberg-blocks')}
+						value={linkType}
+						options={linkTypes}
+						onChange={handleLinkTypeChange}
+					/>
+
+					{/* Conditionally render fields for URL input */}
+					{linkType === 'external' && (
+						<TextControl
+							label={__(
+								'External URL',
+								'naviddev-gutenberg-blocks'
+							)}
+							value={externalUrl}
+							onChange={setExternalUrl}
+						/>
+					)}
+
+					{linkType === 'internal' && (
+						<TextControl
+							label={__(
+								'Internal URL',
+								'naviddev-gutenberg-blocks'
+							)}
+							value={internalUrl}
+							onChange={setInternalUrl}
+						/>
+					)}
 				</PanelBody>
 			</InspectorControls>
 
-			{/* Отображение кнопки с изменяемыми параметрами */}
 			<div
 				className={buttonClasses({
 					buttonSize,
@@ -303,20 +378,39 @@ const CustomButton = ({
 					buttonIconPosition,
 				})}
 			>
-				{iconClass && buttonIconPosition === 'left' && (
-					<i className={iconClass}></i>
-				)}
-				<RichText
-					tagName="span"
-					value={text}
-					onChange={onChangeText}
-					placeholder={__(
-						'Add your button text...',
-						'naviddev-gutenberg-blocks'
-					)}
-				/>
-				{iconClass && buttonIconPosition === 'right' && (
-					<i className={iconClass}></i>
+				{buttonType === 'play' ? (
+					<i className="icn-caret-right"></i>
+				) : buttonType === 'circle' ? (
+					<span>
+						<i className="uil uil-check"></i>
+					</span>
+				) : buttonType === 'social' && socialIcon ? ( // Отображение социальной иконки
+					<i className={`uil uil-${socialIcon}`}></i>
+				) : (
+					<>
+						{iconClass &&
+							buttonType === 'icon' &&
+							buttonIconPosition === 'left' && (
+								<i className={iconClass}></i>
+							)}
+						{buttonType === 'expand' && (
+							<i className="uil uil-arrow-right"></i>
+						)}
+						<RichText
+							tagName="span"
+							value={text}
+							onChange={onChangeText}
+							placeholder={__(
+								'Add your button text...',
+								'naviddev-gutenberg-blocks'
+							)}
+						/>
+						{iconClass &&
+							buttonType === 'icon' &&
+							buttonIconPosition === 'right' && (
+								<i className={iconClass}></i>
+							)}
+					</>
 				)}
 			</div>
 		</>

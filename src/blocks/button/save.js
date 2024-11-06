@@ -6,12 +6,14 @@ export default function save({ attributes }) {
 		buttonSize = 'medium',
 		buttonColor = 'primary',
 		buttonShape = '',
-		buttonStyle = 'solid', // Стиль кнопки
-		buttonType = 'default', // Тип кнопки
-		buttonGradient = 'btn-gradient gradient-1', // Градиент, если используется
+		buttonStyle = 'solid',
+		buttonType = 'default',
+		buttonGradient = 'btn-gradient gradient-1',
+		iconClass = '', // Атрибут для иконки
+		buttonIconPosition = 'left', // Позиция иконки
 	} = attributes;
 
-	// Функция для формирования классов кнопки
+	// Функция для генерации классов для кнопки
 	const buttonClasses = ({
 		buttonSize,
 		buttonColor,
@@ -19,30 +21,26 @@ export default function save({ attributes }) {
 		buttonStyle,
 		buttonType,
 		buttonGradient,
+		iconClass,
+		buttonIconPosition,
 	}) => {
 		const classes = ['btn'];
 
-		// Добавляем размер кнопки
 		if (buttonSize) {
 			classes.push(buttonSize);
 		}
 
-		// Добавляем стиль кнопки
 		if (buttonStyle) {
 			if (buttonStyle === 'outline') {
 				classes.push(`btn-outline-${buttonColor}`);
 			} else if (buttonStyle === 'gradient') {
-				// Если выбран стиль Gradient, добавляем два класса
-				classes.push('btn-gradient'); // Базовый класс для градиента
+				classes.push('btn-gradient');
 				if (buttonGradient) {
-					// Добавляем градиент, например 'gradient-1'
 					classes.push(buttonGradient);
 				}
 			} else if (buttonStyle === 'outline-gradient') {
-				// Если выбран стиль Outline Gradient, добавляем два класса
-				classes.push('btn-outline-gradient'); // Базовый класс для Outline Gradient
+				classes.push('btn-outline-gradient');
 				if (buttonGradient) {
-					// Добавляем градиент, например 'gradient-1'
 					classes.push(buttonGradient);
 				}
 			} else if (buttonStyle === 'soft') {
@@ -52,16 +50,19 @@ export default function save({ attributes }) {
 			}
 		}
 
-		// Добавляем форму кнопки
 		if (buttonShape) {
 			classes.push(buttonShape);
 		}
 
-		// Добавляем тип кнопки
 		if (buttonType) {
 			switch (buttonType) {
 				case 'icon':
 					classes.push('btn-icon');
+					classes.push(
+						buttonIconPosition === 'right'
+							? 'btn-icon-end'
+							: 'btn-icon-start'
+					);
 					break;
 				case 'play':
 					classes.push('btn-circle', 'btn-play', 'ripple');
@@ -81,7 +82,6 @@ export default function save({ attributes }) {
 		return classes.join(' ');
 	};
 
-	// Собираем классы для кнопки
 	const buttonClassName = buttonClasses({
 		buttonSize,
 		buttonColor,
@@ -89,12 +89,41 @@ export default function save({ attributes }) {
 		buttonStyle,
 		buttonType,
 		buttonGradient,
+		iconClass,
+		buttonIconPosition,
 	});
 
 	return (
 		<div {...useBlockProps.save()}>
 			<a href="#" className={buttonClassName}>
-				<RichText.Content tagName="span" value={buttonText} />
+				{/* Логика для отображения иконки для типа 'expand' */}
+				{buttonType === 'expand' && (
+					<i className="uil uil-arrow-right"></i> // Иконка для типа 'expand'
+				)}
+
+				{/* Логика для отображения иконки для типа 'play' */}
+				{buttonType === 'play' && (
+					<i className="icn-caret-right"></i> // Иконка для типа 'play'
+				)}
+
+				{/* Для типа 'icon' отображаем иконку */}
+				{iconClass &&
+					buttonType === 'icon' &&
+					buttonIconPosition === 'left' && (
+						<i className={iconClass}></i> // Иконка слева
+					)}
+
+				{/* Основной текст кнопки */}
+				{buttonType !== 'play' && buttonType !== 'expand' && (
+					<RichText.Content tagName="span" value={buttonText} />
+				)}
+
+				{/* Для типа 'icon' отображаем иконку справа */}
+				{iconClass &&
+					buttonType === 'icon' &&
+					buttonIconPosition === 'right' && (
+						<i className={iconClass}></i> // Иконка справа
+					)}
 			</a>
 		</div>
 	);

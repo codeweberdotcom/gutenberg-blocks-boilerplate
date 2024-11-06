@@ -42,7 +42,7 @@ class Plugin
 	public static function getBlocksName(): array
 	{
 		return [
-			'block-test'
+			'button'
 		];
 	}
 

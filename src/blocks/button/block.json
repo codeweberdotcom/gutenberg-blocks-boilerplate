@@ -1,8 +1,8 @@
 {
     "apiVersion": 2,
-    "name": "naviddev-gutenberg-blocks/test",
+    "name": "naviddev-gutenberg-blocks/button",
     "version": "0.1.0",
-    "title": "test Block",
+    "title": "Button",
     "category": "naviddev-gutenberg-blocks",
     "icon": "calendar-alt",
     "description": "Example block written with ESNext standard and JSX support build step required.",
@@ -38,6 +38,18 @@
         "buttonIconPosition": {
             "type": "string",
             "default": "left"
+        },
+        "iconClass": {
+            "type": "string",
+            "default": "uil-angle-right"
+        },
+        "socialIcon": {
+            "type": "string",
+            "default": "facebook"
+        },
+        "socialIconStyle": {
+            "type": "string",
+            "default": "style1"
         }
     },
     "textdomain": "naviddev-gutenberg-blocks",
