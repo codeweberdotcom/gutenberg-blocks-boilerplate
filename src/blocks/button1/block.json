@@ -1,0 +1,63 @@
+{
+    "apiVersion": 2,
+    "name": "naviddev-gutenberg-blocks/button1",
+    "version": "0.1.0",
+    "title": "Button1",
+    "category": "naviddev-gutenberg-blocks",
+    "icon": "calendar-alt",
+    "description": "Example block written with ESNext standard and JSX support build step required.",
+    "supports": {
+        "html": false,
+        "anchor": false
+    },
+    "attributes": {
+        "buttonText": {
+            "type": "string",
+            "default": "Large Button"
+        },
+        "buttonSize": {
+            "type": "string",
+            "default": "medium"
+        },
+        "buttonColor": {
+            "type": "string",
+            "default": "primary"
+        },
+        "buttonGradientColor": {
+            "type": "string",
+            "default": "gradient gradient-1"
+        },
+        "buttonStyle": {
+            "type": "string",
+            "default": "solid"
+        },
+        "buttonType": {
+            "type": "string",
+            "default": "solid"
+        },
+        "buttonShape": {
+            "type": "string",
+            "default": "pill"
+        },
+        "buttonIconPosition": {
+            "type": "string",
+            "default": "left"
+        },
+        "iconClass": {
+            "type": "string",
+            "default": "uil-angle-right"
+        },
+        "socialIconClass": {
+            "type": "string",
+            "default": "facebook"
+        },
+        "socialIconStyle": {
+            "type": "string",
+            "default": "style_1"
+        }
+    },
+    "textdomain": "naviddev-gutenberg-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css"
+}

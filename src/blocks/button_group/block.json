@@ -1,0 +1,27 @@
+{
+    "apiVersion": 2,
+    "name": "naviddev-gutenberg-blocks/button_group",
+    "version": "0.1.0",
+    "title": "Button Group",
+    "category": "naviddev-gutenberg-blocks",
+    "icon": "calendar-alt",
+    "description": "Example block written with ESNext standard and JSX support build step required.",
+    "supports": {
+        "html": false,
+        "anchor": false
+    },
+    "attributes": {
+        "buttonText": {
+            "type": "string",
+            "default": "Large Button"
+        },
+        "buttonSize": {
+            "type": "string",
+            "default": "btn-sm"
+        }
+    },
+    "textdomain": "naviddev-gutenberg-blocks",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css"
+}
