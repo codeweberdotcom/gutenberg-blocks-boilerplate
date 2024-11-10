@@ -54,6 +54,15 @@
         "socialIconStyle": {
             "type": "string",
             "default": "style_1"
+        },
+        "LinkType": {
+            "type": "string",
+            "default": "external"
+        },
+        "LinkUrl": {
+            "type": "string",
+            "default": "javascript:void(0)",
+			"format": "uri"
         }
     },
     "textdomain": "naviddev-gutenberg-blocks",

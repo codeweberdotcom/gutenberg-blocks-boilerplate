@@ -1,20 +1,17 @@
 import { useBlockProps } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 import ButtonSidebar, { getClassNames } from './sidebar';
+import { LinkTypeControl } from '../../utilities/link_type'; // Импортируем LinkTypeControl
 
 const Edit = ({ attributes, setAttributes }) => {
 	const {
 		buttonText,
-		buttonSize,
-		buttonColor,
-		buttonGradientColor,
 		buttonStyle,
 		buttonType,
-		buttonShape,
 		buttonIconPosition, // Позиция иконки (left или right)
 		iconClass,
-		socialIconClass,
-		socialIconStyle, // Социальная иконка
+		socialIconClass, // Социальная иконка
+		LinkUrl, // Ссылка для кнопки
 	} = attributes;
 
 	// Получаем класс кнопки
@@ -119,7 +116,8 @@ const Edit = ({ attributes, setAttributes }) => {
 	return (
 		<>
 			<div {...useBlockProps()}>
-				<a href="#" className={buttonClass}>
+				{/* Добавляем ссылку к кнопке */}
+				<a href={LinkUrl || '#'} className={buttonClass}>
 					{/* Иконка слева (если выбрана позиция 'left') */}
 					{leftIcon}
 

@@ -1,12 +1,13 @@
 // Импорт необходимых модулей
+import { __ } from '@wordpress/i18n';
 import { colors } from '../../utilities/colors';
 import { gradientcolors } from '../../utilities/gradient_colors';
 import { shapes } from '../../utilities/shapes';
 import { fontIcons } from '../../utilities/font_icon';
 import { fontIconsSocial } from '../../utilities/font_icon_social';
-import { __ } from '@wordpress/i18n';
 import { PanelBody, Button, ComboboxControl } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
+import { LinkTypeControl } from '../../utilities/link_type';
 
 // Функция для динамического формирования класса кнопки
 export const getClassNames = (attributes) => {
@@ -25,9 +26,11 @@ export const getClassNames = (attributes) => {
 	// Создаем массив классов
 	const classes = [];
 
+	// Добавляем класс btn
 	if (
 		buttonType === 'solid' ||
 		buttonType === 'circle' ||
+		buttonType === 'expand' ||
 		buttonType === 'play' ||
 		buttonType === 'circle' ||
 		(buttonType === 'social' && socialIconStyle === 'style_1') ||
@@ -35,7 +38,7 @@ export const getClassNames = (attributes) => {
 	)
 		classes.push(`btn`);
 
-	// Добавляем классы в зависимости от выбранных значений
+	// Добавляем классы размера
 	if (
 		(buttonType === 'solid' ||
 			buttonType === 'circle' ||
@@ -45,6 +48,7 @@ export const getClassNames = (attributes) => {
 	)
 		classes.push(`${buttonSize}`);
 
+	// Добавляем класс btn-circle
 	if (
 		buttonType === 'circle' ||
 		(buttonType === 'social' && socialIconStyle === 'style_1') ||
@@ -52,16 +56,21 @@ export const getClassNames = (attributes) => {
 	)
 		classes.push(`btn-circle`);
 
+	// Добавляем классы btn-play
 	if (buttonType === 'play') classes.push(`btn-play ripple`);
 
+	// Добавляем классы btn-expand
 	if (buttonType === 'expand') classes.push(`btn-expand rounded-pill`);
 
+	// Добавляем классы btn-icon btn-icon-start
 	if (buttonType === 'icon' && buttonIconPosition === 'left')
 		classes.push(`btn-icon btn-icon-start`);
 
+	// Добавляем классы btn-icon btn-icon-end
 	if (buttonType === 'icon' && buttonIconPosition === 'right')
 		classes.push(`btn-icon btn-icon-end`);
 
+	// Добавляем классы btn-color
 	if (
 		(buttonType === 'solid' ||
 			buttonType === 'circle' ||
@@ -73,6 +82,7 @@ export const getClassNames = (attributes) => {
 	)
 		classes.push(`btn-${buttonColor}`);
 
+	// Добавляем классы btn-outline-color
 	if (
 		(buttonType === 'solid' ||
 			buttonType === 'circle' ||
@@ -84,6 +94,7 @@ export const getClassNames = (attributes) => {
 	)
 		classes.push(`btn-outline-${buttonColor}`);
 
+	// Добавляем классы btn-soft-color
 	if (
 		(buttonType === 'solid' ||
 			buttonType === 'circle' ||
@@ -95,6 +106,7 @@ export const getClassNames = (attributes) => {
 	)
 		classes.push(`btn-soft-${buttonColor}`);
 
+	// Добавляем классы btn-gradient-color
 	if (
 		(buttonType === 'solid' ||
 			buttonType === 'circle' ||
@@ -106,9 +118,11 @@ export const getClassNames = (attributes) => {
 	)
 		classes.push(`btn-${buttonGradientColor}`);
 
+	// Добавляем классы btn-social
 	if (buttonType === 'social' && socialIconStyle === 'style_1')
 		classes.push(`btn-${socialIconClass}`);
 
+	// Добавляем классы btn-outline-gradient
 	if (
 		(buttonType === 'solid' ||
 			buttonType === 'circle' ||
@@ -120,16 +134,16 @@ export const getClassNames = (attributes) => {
 	)
 		classes.push(`btn-outline-${buttonGradientColor}`);
 
+	// Добавляем классы btn-shape
 	if ((buttonType === 'solid' || buttonType === 'icon') && buttonShape)
 		classes.push(`${buttonShape}`);
 
-	// Объединяем массив в строку
+	// Объединяем массив классов в строку
 	return classes.join(' ');
 };
 
 const ButtonSidebar = ({ attributes, setAttributes }) => {
 	const {
-		buttonText,
 		buttonSize,
 		buttonColor,
 		buttonGradientColor,
@@ -140,6 +154,11 @@ const ButtonSidebar = ({ attributes, setAttributes }) => {
 		iconClass,
 		socialIconClass,
 		socialIconStyle,
+		linkType,
+		page,
+		post,
+		cf7,
+		externalUrl,
 	} = attributes;
 
 	// Условие для ограничения отображения кнопок Outline, Gradient и Outline Gradient
@@ -150,6 +169,17 @@ const ButtonSidebar = ({ attributes, setAttributes }) => {
 			<PanelBody
 				title={__('Button Settings', 'naviddev-gutenberg-blocks')}
 			>
+				<div>
+					<div className="p-5 border mb-5">
+						<LinkTypeControl
+							value={attributes}
+							onChange={(newLink) =>
+								setAttributes({ LinkUrl: newLink })
+							} // Обновляем LinkUrl через setAttributes
+						/>
+					</div>
+				</div>
+
 				{/* Тип кнопки */}
 				<div className="component-sidebar-title">
 					<label>
