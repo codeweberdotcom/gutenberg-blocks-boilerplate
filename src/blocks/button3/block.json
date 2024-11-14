@@ -1,8 +1,8 @@
 {
     "apiVersion": 2,
-    "name": "naviddev-gutenberg-blocks/button2",
+    "name": "naviddev-gutenberg-blocks/button3",
     "version": "0.1.0",
-    "title": "Button2",
+    "title": "Button3",
     "category": "naviddev-gutenberg-blocks",
     "icon": "calendar-alt",
     "description": "Example block written with ESNext standard and JSX support build step required.",
@@ -11,47 +11,51 @@
         "anchor": false
     },
     "attributes": {
-        "buttonText": {
+        "ButtonContent": {
             "type": "string",
             "default": "Large Button"
         },
-        "buttonSize": {
+		"ButtonClass": {
+            "type": "string",
+            "default": "btn btn-lg btn-primary"
+        },
+        "ButtonSize": {
             "type": "string",
             "default": "btn-sm"
         },
-        "buttonColor": {
+        "ButtonColor": {
             "type": "string",
             "default": "primary"
         },
-        "buttonGradientColor": {
+        "ButtonGradientColor": {
             "type": "string",
             "default": "gradient gradient-1"
         },
-        "buttonStyle": {
+        "ButtonStyle": {
             "type": "string",
             "default": "solid"
         },
-        "buttonType": {
+        "ButtonType": {
             "type": "string",
             "default": "solid"
         },
-        "buttonShape": {
+        "ButtonShape": {
             "type": "string",
             "default": "rounded-0"
         },
-        "buttonIconPosition": {
+        "ButtonIconPosition": {
             "type": "string",
             "default": "left"
         },
-        "iconClass": {
+        "IconClass": {
             "type": "string",
             "default": "uil-angle-right"
         },
-        "socialIconClass": {
+        "SocialIconClass": {
             "type": "string",
             "default": "facebook"
         },
-        "socialIconStyle": {
+        "SocialIconStyle": {
             "type": "string",
             "default": "style_1"
         },
@@ -64,14 +68,38 @@
             "default": "javascript:void(0)",
 			"format": "uri"
         },
-		 "DataValue": {
+		"PageId": {
+            "type": "string",
+            "default": ""
+        },
+		"PostId": {
+            "type": "string",
+            "default": ""
+        },
+		"CF7ID": {
+            "type": "string",
+            "default": ""
+        },
+		"ModalID": {
+            "type": "string",
+            "default": ""
+        },
+		"HtmlID": {
+            "type": "string",
+            "default": ""
+        },
+		"DataValue": {
             "type": "string",
             "default": ""
 
         },
-		 "PhoneType": {
+		"PhoneType": {
             "type": "string",
             "default": "сustom"
+        },
+		"PhoneNumber": {
+            "type": "string",
+            "default": ""
         }
     },
     "textdomain": "naviddev-gutenberg-blocks",

@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 import { useBlockProps } from '@wordpress/block-editor';
 import { RichText } from '@wordpress/block-editor';
 import ButtonSidebar, { getClassNames } from './sidebar';
@@ -11,7 +12,8 @@ const Edit = ({ attributes, setAttributes }) => {
 		buttonIconPosition, // Позиция иконки (left или right)
 		iconClass,
 		socialIconClass, // Социальная иконка
-		LinkUrl, // Ссылка для кнопки
+		LinkUrl,
+		DataValue, // Ссылка для кнопки
 	} = attributes;
 
 	// Получаем класс кнопки
@@ -94,7 +96,10 @@ const Edit = ({ attributes, setAttributes }) => {
 					onChange={(newText) =>
 						setAttributes({ buttonText: newText })
 					}
-					placeholder="Enter button text"
+					placeholder={__(
+						'Enter button text',
+						'naviddev-gutenberg-blocks'
+					)}
 				/>
 			</>
 		);
@@ -105,7 +110,10 @@ const Edit = ({ attributes, setAttributes }) => {
 				tagName="span"
 				value={buttonText}
 				onChange={(newText) => setAttributes({ buttonText: newText })}
-				placeholder="Enter button text"
+				placeholder={__(
+					'Enter button text',
+					'naviddev-gutenberg-blocks'
+				)}
 			/>
 		);
 	} else {
@@ -113,22 +121,26 @@ const Edit = ({ attributes, setAttributes }) => {
 		buttonContent = null;
 	}
 
+	console.log(DataValue);
+	console.log(LinkUrl);
+
 	return (
 		<>
 			<div {...useBlockProps()}>
 				{/* Добавляем ссылку к кнопке */}
-				<a href={LinkUrl || '#'} className={buttonClass}>
-					{/* Иконка слева (если выбрана позиция 'left') */}
+				<a
+					href={LinkUrl || '#'}
+					className={buttonClass}
+					data-value={DataValue}
+				>
 					{leftIcon}
 
-					{/* Контент кнопки, который зависит от типа */}
 					{circleIcon}
+
 					{buttonContent}
 
-					{/* Социальная иконка */}
 					{socialIcon}
 
-					{/* Иконка справа (если выбрана позиция 'right') */}
 					{rightIcon}
 				</a>
 			</div>

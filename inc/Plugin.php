@@ -43,6 +43,7 @@ class Plugin
 	{
 		return [
 			'button2',
+			'button3',
 		];
 	}
 
@@ -80,8 +81,10 @@ class Plugin
 	 */
 	public static function loadTextDomain(): void
 	{
-		load_plugin_textdomain(static::L10N, FALSE, static::L10N . '/languages/');
+		load_plugin_textdomain(static::L10N, FALSE, static::L10N . '/languages');
 	}
+
+
 
 	/**
 	 * The base URL path to this plugin's folder.
