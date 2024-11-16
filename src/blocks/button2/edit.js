@@ -121,9 +121,6 @@ const Edit = ({ attributes, setAttributes }) => {
 		buttonContent = null;
 	}
 
-	console.log(DataValue);
-	console.log(LinkUrl);
-
 	return (
 		<>
 			<div {...useBlockProps()}>

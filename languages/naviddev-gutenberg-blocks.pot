@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gutenberg Blocks\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-13 13:41+0000\n"
+"POT-Creation-Date: 2024-11-16 12:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,66 +13,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.11; wp-6.7\n"
+"X-Loco-Version: 2.6.11; wp-6.6.2\n"
 "X-Domain: naviddev-gutenberg-blocks"
-
-#: src/utilities/button.js:403
-msgid "Add your button text..."
-msgstr ""
-
-#:
-msgid "Phone number"
-msgstr ""
-
-
-#:
-msgid "Phone number 2"
-msgstr ""
-
-
 
 #. Description of the plugin
 msgid "An addon for Gutenberg plugin."
 msgstr ""
 
-#: src/utilities/button.js:289 src/blocks/button1/sidebar.js:46 src/blocks/button2/sidebar.js:336
+#: src/blocks/button2/sidebar.js:337 src/blocks/button3/sidebar.js:312
 msgid "Button Color"
 msgstr ""
 
-#: src/utilities/button.js:301
-msgid "Button Gradient"
-msgstr ""
-
-#: src/blocks/button1/sidebar.js:54
-msgid "Button Gradient Color"
-msgstr ""
-
-#: src/utilities/button.js:175 src/blocks/button1/sidebar.js:30 src/blocks/button2/sidebar.js:171
+#: src/blocks/button2/sidebar.js:172 src/blocks/button3/sidebar.js:165
 msgid "Button Settings"
 msgstr ""
 
-#: src/utilities/button.js:280 src/blocks/button2/sidebar.js:249
+#: src/blocks/button2/sidebar.js:172 src/blocks/button3/sidebar.js:165
+msgid "Test text for translation in the sidebar"
+msgstr ""
+
+
+
+#: src/blocks/button2/sidebar.js:250 src/blocks/button3/sidebar.js:231
 msgid "Button Shape"
 msgstr ""
 
-#: src/blocks/button1/sidebar.js:34 src/blocks/button2/sidebar.js:219
+#: src/blocks/button2/sidebar.js:220 src/blocks/button3/sidebar.js:201
 msgid "Button Size"
 msgstr ""
 
-#: src/utilities/button.js:258 src/blocks/button1/sidebar.js:67 src/blocks/button2/sidebar.js:282
+#: src/blocks/button2/sidebar.js:283 src/blocks/button3/sidebar.js:261
 msgid "Button Style"
 msgstr ""
 
-#: src/blocks/button1/sidebar.js:115
-msgid "Button Text"
-msgstr ""
-
-#: src/utilities/button.js:178 src/blocks/button2/sidebar.js:187
+#: src/blocks/button2/sidebar.js:12 src/blocks/button2/sidebar.js:188 src/blocks/button3/sidebar.js:170
 msgid "Button Type"
-msgstr ""
-
-#: src/utilities/button.js:21
-msgid "Circle"
 msgstr ""
 
 #: settings/options_page/pages/page_2.php:49
@@ -83,31 +58,11 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
-#: src/blocks/button1/sidebar.js:118
-msgid "Enter Button Text"
-msgstr ""
-
 #: src/blocks/button2/edit.js:99 src/blocks/button2/edit.js:113
 msgid "Enter button text"
 msgstr ""
 
-#: src/utilities/button.js:24
-msgid "Expand"
-msgstr ""
-
-#: src/utilities/button.js:41 src/utilities/button.js:347
-msgid "External URL"
-msgstr ""
-
-#: src/utilities/button.js:49
-msgid "Form"
-msgstr ""
-
-#: src/utilities/button.js:32
-msgid "Gradient"
-msgstr ""
-
-#: src/blocks/button2/sidebar.js:357
+#: src/blocks/button2/sidebar.js:358 src/blocks/button3/sidebar.js:330
 msgid "Gradient Color"
 msgstr ""
 
@@ -119,63 +74,31 @@ msgstr ""
 msgid "https://naviddev.com"
 msgstr ""
 
-#: src/utilities/button.js:23 src/utilities/button.js:314
-msgid "Icon"
-msgstr ""
-
-#: src/blocks/button1/sidebar.js:83 src/blocks/button2/sidebar.js:410
+#: src/blocks/button2/sidebar.js:411 src/blocks/button3/sidebar.js:383
 msgid "Icon Class"
 msgstr ""
 
-#: src/blocks/button2/sidebar.js:377
+#: src/blocks/button2/sidebar.js:378 src/blocks/button3/sidebar.js:350
 msgid "Icon Position"
 msgstr ""
 
-#: src/utilities/button.js:320
-msgid "Icon Position (Right)"
-msgstr ""
-
-#: src/utilities/button.js:45 src/utilities/button.js:358
-msgid "Internal URL"
-msgstr ""
-
-#: src/utilities/button.js:240
-msgid "Large"
-msgstr ""
-
-#: src/blocks/button2/sidebar.js:391
+#: src/blocks/button2/sidebar.js:392 src/blocks/button3/sidebar.js:364
 msgid "Left Icon"
+msgstr ""
+
+#: src/utilities/link_type1.js:326
+msgid "Link Settings"
 msgstr ""
 
 #: settings/options_page/pages/page_2.php:33
 msgid "Link to RestApi data"
 msgstr ""
 
-#: src/utilities/button.js:338
-msgid "Link Type"
-msgstr ""
-
-#: src/utilities/button.js:246
-msgid "Medium"
-msgstr ""
-
-#: src/utilities/button.js:48
-msgid "Modal"
-msgstr ""
-
 #. Author of the plugin
 msgid "Nabi Abdi"
 msgstr ""
 
-#: src/utilities/button.js:30
-msgid "Outline"
-msgstr ""
-
-#: src/utilities/button.js:34
-msgid "Outline Gradient"
-msgstr ""
-
-#: src/utilities/link_type.js:283
+#: src/utilities/link_type.js:280 src/utilities/link_type1.js:390
 msgid "Phone Type"
 msgstr ""
 
@@ -183,76 +106,16 @@ msgstr ""
 msgid "Phones"
 msgstr ""
 
-#: src/utilities/button.js:25
-msgid "Play"
-msgstr ""
-
-#: src/blocks/button2/sidebar.js:401
+#: src/blocks/button2/sidebar.js:402 src/blocks/button3/sidebar.js:374
 msgid "Right Icon"
 msgstr ""
 
-#: src/utilities/button.js:52
-msgid "Rutube"
-msgstr ""
-
-#: src/utilities/button.js:233
-msgid "Size Button"
-msgstr ""
-
-#: src/utilities/button.js:252
-msgid "Small"
-msgstr ""
-
-#: src/utilities/button.js:22
-msgid "Social"
-msgstr ""
-
-#: src/utilities/button.js:187
-msgid "Social Icon"
-msgstr ""
-
-#: src/blocks/button1/sidebar.js:91 src/blocks/button2/sidebar.js:421
+#: src/blocks/button2/sidebar.js:422 src/blocks/button3/sidebar.js:394
 msgid "Social Icon Class"
 msgstr ""
 
-#: src/blocks/button1/sidebar.js:101 src/blocks/button2/sidebar.js:439
+#: src/blocks/button2/sidebar.js:440 src/blocks/button3/sidebar.js:409
 msgid "Social Icon Style"
-msgstr ""
-
-#: src/utilities/button.js:31
-msgid "Soft"
-msgstr ""
-
-#: src/utilities/button.js:20 src/utilities/button.js:29
-msgid "Solid"
-msgstr ""
-
-#: src/utilities/button.js:212
-msgid "Style 1"
-msgstr ""
-
-#: src/utilities/button.js:218
-msgid "Style 2"
-msgstr ""
-
-#: src/utilities/button.js:224
-msgid "Style 3"
-msgstr ""
-
-#: src/utilities/button.js:201
-msgid "Style Social"
-msgstr ""
-
-#: src/utilities/button.js:50
-msgid "Video"
-msgstr ""
-
-#: src/utilities/button.js:53
-msgid "VK Video"
-msgstr ""
-
-#: src/utilities/button.js:51
-msgid "YouTube"
 msgstr ""
 
 #: settings/options_page/class-options-tabs.php:142

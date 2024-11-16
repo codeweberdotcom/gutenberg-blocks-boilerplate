@@ -8,7 +8,8 @@
     "description": "Example block written with ESNext standard and JSX support build step required.",
     "supports": {
         "html": false,
-        "anchor": false
+		"customClassName": true,
+        "anchor": true
     },
     "attributes": {
         "ButtonContent": {
@@ -59,6 +60,14 @@
             "type": "string",
             "default": "style_1"
         },
+		"LeftIcon": {
+            "type": "string",
+            "default": ""
+        },
+		"RightIcon": {
+            "type": "string",
+            "default": ""
+        },
         "LinkType": {
             "type": "string",
             "default": "external"
@@ -88,6 +97,18 @@
             "type": "string",
             "default": ""
         },
+		"YoutubeID": {
+            "type": "string",
+            "default": ""
+        },
+		"RutubeID": {
+            "type": "string",
+            "default": ""
+        },
+		"VKID": {
+            "type": "string",
+            "default": ""
+        },
 		"DataValue": {
             "type": "string",
             "default": ""
@@ -104,6 +125,6 @@
     },
     "textdomain": "naviddev-gutenberg-blocks",
     "editorScript": "file:./index.js",
-    "editorStyle": "file:./index.css",
+    "editorStyle": "../../index.css",
     "style": "file:./style-index.css"
 }

@@ -6,23 +6,22 @@ import { shapes } from '../../utilities/shapes';
 import { fontIcons } from '../../utilities/font_icon';
 import { fontIconsSocial } from '../../utilities/font_icon_social';
 import { PanelBody, Button, ComboboxControl } from '@wordpress/components';
-import { InspectorControls } from '@wordpress/block-editor';
-import { LinkTypeControl } from '../../utilities/link_type';
-
-console.log(__('Button Type', 'naviddev-gutenberg-blocks'));
 
 // Функция для динамического формирования класса кнопки
 export const getClassNames = (attributes) => {
 	const {
-		buttonSize,
-		buttonColor,
-		buttonGradientColor,
-		buttonStyle,
-		buttonType,
-		buttonShape,
-		buttonIconPosition,
-		socialIconStyle,
-		socialIconClass,
+		ButtonSize,
+		ButtonColor,
+		ButtonGradientColor,
+		ButtonStyle,
+		ButtonType,
+		ButtonShape,
+		ButtonIconPosition,
+		IconClass,
+		SocialIconStyle,
+		SocialIconClass,
+		LeftIcon,
+		RightIcon,
 	} = attributes;
 
 	// Создаем массив классов
@@ -30,290 +29,401 @@ export const getClassNames = (attributes) => {
 
 	// Добавляем класс btn
 	if (
-		buttonType === 'solid' ||
-		buttonType === 'circle' ||
-		buttonType === 'expand' ||
-		buttonType === 'play' ||
-		buttonType === 'circle' ||
-		(buttonType === 'social' && socialIconStyle === 'style_1') ||
-		buttonType === 'icon'
+		ButtonType === 'solid' ||
+		ButtonType === 'circle' ||
+		ButtonType === 'expand' ||
+		ButtonType === 'play' ||
+		ButtonType === 'circle' ||
+		(ButtonType === 'social' && SocialIconStyle === 'style_1') ||
+		ButtonType === 'icon'
 	)
 		classes.push(`btn`);
 
 	// Добавляем классы размера
 	if (
-		(buttonType === 'solid' ||
-			buttonType === 'circle' ||
-			(buttonType === 'social' && socialIconStyle === 'style_1') ||
-			buttonType === 'icon') &&
-		buttonSize
+		(ButtonType === 'solid' ||
+			ButtonType === 'circle' ||
+			(ButtonType === 'social' && SocialIconStyle === 'style_1') ||
+			ButtonType === 'icon') &&
+		ButtonSize
 	)
-		classes.push(`${buttonSize}`);
+		classes.push(`${ButtonSize}`);
 
 	// Добавляем класс btn-circle
 	if (
-		buttonType === 'circle' ||
-		(buttonType === 'social' && socialIconStyle === 'style_1') ||
-		buttonType === 'play'
+		ButtonType === 'circle' ||
+		(ButtonType === 'social' && SocialIconStyle === 'style_1') ||
+		ButtonType === 'play'
 	)
 		classes.push(`btn-circle`);
 
 	// Добавляем классы btn-play
-	if (buttonType === 'play') classes.push(`btn-play ripple`);
+	if (ButtonType === 'play') classes.push(`btn-play ripple`);
 
 	// Добавляем классы btn-expand
-	if (buttonType === 'expand') classes.push(`btn-expand rounded-pill`);
+	if (ButtonType === 'expand') classes.push(`btn-expand rounded-pill`);
 
 	// Добавляем классы btn-icon btn-icon-start
-	if (buttonType === 'icon' && buttonIconPosition === 'left')
+	if (ButtonType === 'icon' && ButtonIconPosition === 'left')
 		classes.push(`btn-icon btn-icon-start`);
 
 	// Добавляем классы btn-icon btn-icon-end
-	if (buttonType === 'icon' && buttonIconPosition === 'right')
+	if (ButtonType === 'icon' && ButtonIconPosition === 'right')
 		classes.push(`btn-icon btn-icon-end`);
 
 	// Добавляем классы btn-color
 	if (
-		(buttonType === 'solid' ||
-			buttonType === 'circle' ||
-			buttonType === 'icon' ||
-			buttonType === 'expand' ||
-			buttonType === 'play') &&
-		buttonStyle === 'solid' &&
-		buttonColor
+		(ButtonType === 'solid' ||
+			ButtonType === 'circle' ||
+			ButtonType === 'icon' ||
+			ButtonType === 'expand' ||
+			ButtonType === 'play') &&
+		ButtonStyle === 'solid' &&
+		ButtonColor
 	)
-		classes.push(`btn-${buttonColor}`);
+		classes.push(`btn-${ButtonColor}`);
 
 	// Добавляем классы btn-outline-color
 	if (
-		(buttonType === 'solid' ||
-			buttonType === 'circle' ||
-			buttonType === 'icon' ||
-			buttonType === 'expand' ||
-			buttonType === 'play') &&
-		buttonStyle === 'outline' &&
-		buttonColor
+		(ButtonType === 'solid' ||
+			ButtonType === 'circle' ||
+			ButtonType === 'icon' ||
+			ButtonType === 'expand' ||
+			ButtonType === 'play') &&
+		ButtonStyle === 'outline' &&
+		ButtonColor
 	)
-		classes.push(`btn-outline-${buttonColor}`);
+		classes.push(`btn-outline-${ButtonColor}`);
 
 	// Добавляем классы btn-soft-color
 	if (
-		(buttonType === 'solid' ||
-			buttonType === 'circle' ||
-			buttonType === 'icon' ||
-			buttonType === 'expand' ||
-			buttonType === 'play') &&
-		buttonStyle === 'soft' &&
-		buttonColor
+		(ButtonType === 'solid' ||
+			ButtonType === 'circle' ||
+			ButtonType === 'icon' ||
+			ButtonType === 'expand' ||
+			ButtonType === 'play') &&
+		ButtonStyle === 'soft' &&
+		ButtonColor
 	)
-		classes.push(`btn-soft-${buttonColor}`);
+		classes.push(`btn-soft-${ButtonColor}`);
 
 	// Добавляем классы btn-gradient-color
 	if (
-		(buttonType === 'solid' ||
-			buttonType === 'circle' ||
-			buttonType === 'icon' ||
-			buttonType === 'expand' ||
-			buttonType === 'play') &&
-		buttonStyle === 'gradient' &&
-		buttonGradientColor
+		(ButtonType === 'solid' ||
+			ButtonType === 'circle' ||
+			ButtonType === 'icon' ||
+			ButtonType === 'expand' ||
+			ButtonType === 'play') &&
+		ButtonStyle === 'gradient' &&
+		ButtonGradientColor
 	)
-		classes.push(`btn-${buttonGradientColor}`);
+		classes.push(`btn-${ButtonGradientColor}`);
 
 	// Добавляем классы btn-social
-	if (buttonType === 'social' && socialIconStyle === 'style_1')
-		classes.push(`btn-${socialIconClass}`);
+	if (ButtonType === 'social' && SocialIconStyle === 'style_1')
+		classes.push(`btn-${SocialIconClass}`);
 
 	// Добавляем классы btn-outline-gradient
 	if (
-		(buttonType === 'solid' ||
-			buttonType === 'circle' ||
-			buttonType === 'icon' ||
-			buttonType === 'ezpand' ||
-			buttonType === 'play') &&
-		buttonStyle === 'outline-gradient' &&
-		buttonGradientColor
+		(ButtonType === 'solid' ||
+			ButtonType === 'circle' ||
+			ButtonType === 'icon' ||
+			ButtonType === 'ezpand' ||
+			ButtonType === 'play') &&
+		ButtonStyle === 'outline-gradient' &&
+		ButtonGradientColor
 	)
-		classes.push(`btn-outline-${buttonGradientColor}`);
+		classes.push(`btn-outline-${ButtonGradientColor}`);
 
 	// Добавляем классы btn-shape
-	if ((buttonType === 'solid' || buttonType === 'icon') && buttonShape)
-		classes.push(`${buttonShape}`);
+	if ((ButtonType === 'solid' || ButtonType === 'icon') && ButtonShape)
+		classes.push(`${ButtonShape}`);
 
 	// Объединяем массив классов в строку
 	return classes.join(' ');
 };
 
-const ButtonSidebar = ({ attributes, setAttributes }) => {
+export const ButtonSidebar = ({ attributes, setAttributes }) => {
 	const {
-		buttonSize,
-		buttonColor,
-		buttonGradientColor,
-		buttonStyle,
-		buttonType,
-		buttonShape,
-		buttonIconPosition,
-		iconClass,
-		socialIconClass,
-		socialIconStyle,
-		linkType,
-		page,
-		post,
-		cf7,
-		externalUrl,
+		ButtonSize,
+		ButtonColor,
+		ButtonGradientColor,
+		ButtonStyle,
+		ButtonType,
+		ButtonShape,
+		ButtonIconPosition,
+		IconClass,
+		SocialIconClass,
+		SocialIconStyle,
 	} = attributes;
 
 	// Условие для ограничения отображения кнопок Outline, Gradient и Outline Gradient
-	const isRestrictedType = ['expand', 'social', 'play'].includes(buttonType);
+	const isRestrictedType = ['expand', 'social', 'play'].includes(ButtonType);
 
 	return (
-		<InspectorControls>
-			<PanelBody
-				title={__('Button Settings', 'naviddev-gutenberg-blocks')}
-			>
-				<div>
-					<div className="p-5 border mb-5">
-						<LinkTypeControl
-							value={attributes}
-							onChange={(newLink) =>
-								setAttributes({ LinkUrl: newLink })
-							} // Обновляем LinkUrl через setAttributes
-						/>
+		<PanelBody
+			title={__('Button Settings', 'naviddev-gutenberg-blocks')}
+			className="custom-panel-body"
+		>
+			{/* Тип кнопки */}
+			<div className="component-sidebar-title">
+				<label>{__('Button Type', 'naviddev-gutenberg-blocks')}</label>
+			</div>
+			<div className="button-type-controls button-group-sidebar_33">
+				{[
+					{ label: 'Solid', value: 'solid' },
+					{ label: 'Circle', value: 'circle' },
+					{ label: 'Social', value: 'social' },
+					{ label: 'Icon', value: 'icon' },
+					{ label: 'Expand', value: 'expand' },
+					{ label: 'Play', value: 'play' },
+				].map((type) => (
+					<Button
+						key={type.value}
+						isPrimary={ButtonType === type.value}
+						onClick={() =>
+							setAttributes({ ButtonType: type.value })
+						}
+					>
+						{type.label}
+					</Button>
+				))}
+			</div>
+
+			{(ButtonType === 'solid' ||
+				ButtonType === 'circle' ||
+				ButtonType === 'social' ||
+				ButtonType === 'icon') && (
+				<>
+					{/* Размер кнопки */}
+					<div className="component-sidebar-title">
+						<label>
+							{__('Button Size', 'naviddev-gutenberg-blocks')}
+						</label>
+					</div>
+					<div className="button-size-controls button-group-sidebar_33">
+						{[
+							{ label: 'Small', value: 'btn-sm' },
+							{ label: 'Medium', value: '' },
+							{ label: 'Large', value: 'btn-lg' },
+						].map((size) => (
+							<Button
+								key={size.value}
+								isPrimary={ButtonSize === size.value}
+								onClick={() =>
+									setAttributes({
+										ButtonSize: size.value,
+									})
+								}
+							>
+								{size.label}
+							</Button>
+						))}
+					</div>
+				</>
+			)}
+
+			{/* Форма кнопки */}
+			{(ButtonType === 'icon' || ButtonType === 'solid') && (
+				<div className="button-shape-controls">
+					<div className="component-sidebar-title">
+						<label>
+							{__('Button Shape', 'naviddev-gutenberg-blocks')}
+						</label>
+					</div>
+					<div className="button-shape-buttons button-group-sidebar_33">
+						{shapes.map((shape) => (
+							<Button
+								key={shape.value}
+								isPrimary={ButtonShape === shape.value}
+								onClick={() =>
+									setAttributes({
+										ButtonShape: shape.value,
+									})
+								}
+							>
+								{shape.label}
+							</Button>
+						))}
 					</div>
 				</div>
+			)}
 
-				{/* Тип кнопки */}
-				<div className="component-sidebar-title">
-					<label>
-						{__('Button Type', 'naviddev-gutenberg-blocks')}
-					</label>
+			{/* Стиль кнопки */}
+			{(ButtonType === 'icon' ||
+				ButtonType === 'solid' ||
+				ButtonType === 'circle' ||
+				ButtonType === 'expand' ||
+				ButtonType === 'play') && (
+				<div className="button-style-controls">
+					<div className="component-sidebar-title">
+						<label>
+							{__('Button Style', 'naviddev-gutenberg-blocks')}
+						</label>
+					</div>
+					<div className="button-style-buttons button-group-sidebar_50">
+						{[
+							{ label: 'Solid', value: 'solid' },
+							{ label: 'Soft', value: 'soft' },
+							// Отображаем кнопки Outline, Gradient и Outline Gradient только если не выбран ограниченный тип
+							...(!isRestrictedType
+								? [
+										{
+											label: 'Outline',
+											value: 'outline',
+										},
+										{
+											label: 'Gradient',
+											value: 'gradient',
+										},
+										{
+											label: 'Outline Gradient',
+											value: 'outline-gradient',
+										},
+								  ]
+								: []),
+						].map((style) => (
+							<Button
+								key={style.value}
+								isPrimary={ButtonStyle === style.value}
+								onClick={() =>
+									setAttributes({
+										ButtonStyle: style.value,
+									})
+								}
+							>
+								{style.label}
+							</Button>
+						))}
+					</div>
 				</div>
-				<div className="button-type-controls button-group-sidebar_33">
-					{[
-						{ label: 'Solid', value: 'solid' },
-						{ label: 'Circle', value: 'circle' },
-						{ label: 'Social', value: 'social' },
-						{ label: 'Icon', value: 'icon' },
-						{ label: 'Expand', value: 'expand' },
-						{ label: 'Play', value: 'play' },
-					].map((type) => (
+			)}
+
+			{/* Цвет кнопки */}
+			{(ButtonType === 'icon' ||
+				ButtonType === 'solid' ||
+				ButtonType === 'circle' ||
+				ButtonType === 'expand' ||
+				ButtonType === 'play') &&
+				(ButtonStyle === 'solid' ||
+					ButtonStyle === 'outline' ||
+					ButtonStyle === 'soft') && (
+					<ComboboxControl
+						label={__('Button Color', 'naviddev-gutenberg-blocks')}
+						value={ButtonColor}
+						options={colors}
+						onChange={(newColor) =>
+							setAttributes({ ButtonColor: newColor })
+						}
+					/>
+				)}
+
+			{/* Градиентный цвет */}
+			{(ButtonType === 'icon' ||
+				ButtonType === 'solid' ||
+				ButtonType === 'circle' ||
+				ButtonType === 'expand' ||
+				ButtonType === 'play') &&
+				(ButtonStyle === 'outline-gradient' ||
+					ButtonStyle === 'gradient') && (
+					<ComboboxControl
+						label={__(
+							'Gradient Color',
+							'naviddev-gutenberg-blocks'
+						)}
+						value={ButtonGradientColor}
+						options={gradientcolors}
+						onChange={(newGradient) =>
+							setAttributes({
+								ButtonGradientColor: newGradient,
+							})
+						}
+					/>
+				)}
+
+			{/* Позиция иконки */}
+			{ButtonType === 'icon' && (
+				<>
+					<div className="icon-position-controls button-group-sidebar_50">
+						<div className="component-sidebar-title">
+							<label>
+								{__(
+									'Icon Position',
+									'naviddev-gutenberg-blocks'
+								)}
+							</label>
+						</div>
 						<Button
-							key={type.value}
-							isPrimary={buttonType === type.value}
+							isPrimary={ButtonIconPosition === 'left'}
 							onClick={() =>
-								setAttributes({ buttonType: type.value })
+								setAttributes({
+									ButtonIconPosition: 'left',
+								})
 							}
 						>
-							{type.label}
+							{__('Left Icon', 'naviddev-gutenberg-blocks')}
 						</Button>
-					))}
-				</div>
-
-				{(buttonType === 'solid' ||
-					buttonType === 'circle' ||
-					buttonType === 'social' ||
-					buttonType === 'icon') && (
-					<>
-						{/* Размер кнопки */}
-						<div className="component-sidebar-title">
-							<label>
-								{__('Button Size', 'naviddev-gutenberg-blocks')}
-							</label>
-						</div>
-						<div className="button-size-controls button-group-sidebar_33">
-							{[
-								{ label: 'Small', value: 'btn-sm' },
-								{ label: 'Medium', value: '' },
-								{ label: 'Large', value: 'btn-lg' },
-							].map((size) => (
-								<Button
-									key={size.value}
-									isPrimary={buttonSize === size.value}
-									onClick={() =>
-										setAttributes({
-											buttonSize: size.value,
-										})
-									}
-								>
-									{size.label}
-								</Button>
-							))}
-						</div>
-					</>
-				)}
-
-				{/* Форма кнопки */}
-				{(buttonType === 'icon' || buttonType === 'solid') && (
-					<div className="button-shape-controls">
-						<div className="component-sidebar-title">
-							<label>
-								{__(
-									'Button Shape',
-									'naviddev-gutenberg-blocks'
-								)}
-							</label>
-						</div>
-						<div className="button-shape-buttons button-group-sidebar_33">
-							{shapes.map((shape) => (
-								<Button
-									key={shape.value}
-									isPrimary={buttonShape === shape.value}
-									onClick={() =>
-										setAttributes({
-											buttonShape: shape.value,
-										})
-									}
-								>
-									{shape.label}
-								</Button>
-							))}
-						</div>
+						<Button
+							isPrimary={ButtonIconPosition === 'right'}
+							onClick={() =>
+								setAttributes({
+									ButtonIconPosition: 'right',
+								})
+							}
+						>
+							{__('Right Icon', 'naviddev-gutenberg-blocks')}
+						</Button>
 					</div>
-				)}
+				</>
+			)}
 
-				{/* Стиль кнопки */}
-				{(buttonType === 'icon' ||
-					buttonType === 'solid' ||
-					buttonType === 'circle' ||
-					buttonType === 'expand' ||
-					buttonType === 'play') && (
-					<div className="button-style-controls">
+			{/* Иконка круга */}
+			{(ButtonType === 'circle' || ButtonType === 'icon') && (
+				<ComboboxControl
+					label={__('Icon Class', 'naviddev-gutenberg-blocks')}
+					value={IconClass}
+					options={fontIcons}
+					onChange={(newIcon) =>
+						setAttributes({ IconClass: newIcon })
+					}
+				/>
+			)}
+
+			{ButtonType === 'social' && (
+				<ComboboxControl
+					label={__('Social Icon Class', 'naviddev-gutenberg-blocks')}
+					value={SocialIconClass}
+					options={fontIconsSocial}
+					onChange={(newSocialIcon) =>
+						setAttributes({ SocialIconClass: newSocialIcon })
+					}
+				/>
+			)}
+
+			{/* Социальные иконки */}
+			{ButtonType === 'social' && (
+				<>
+					<div className="social-icon-style-controls button-group-sidebar">
 						<div className="component-sidebar-title">
 							<label>
 								{__(
-									'Button Style',
+									'Social Icon Style',
 									'naviddev-gutenberg-blocks'
 								)}
 							</label>
 						</div>
-						<div className="button-style-buttons button-group-sidebar_50">
+						<div className="social-icon-style-buttons">
 							{[
-								{ label: 'Solid', value: 'solid' },
-								{ label: 'Soft', value: 'soft' },
-								// Отображаем кнопки Outline, Gradient и Outline Gradient только если не выбран ограниченный тип
-								...(!isRestrictedType
-									? [
-											{
-												label: 'Outline',
-												value: 'outline',
-											},
-											{
-												label: 'Gradient',
-												value: 'gradient',
-											},
-											{
-												label: 'Outline Gradient',
-												value: 'outline-gradient',
-											},
-									  ]
-									: []),
+								{ label: 'Style 1', value: 'style_1' },
+								{ label: 'Style 2', value: 'style_2' },
+								{ label: 'Style 3', value: 'style_3' },
 							].map((style) => (
 								<Button
 									key={style.value}
-									isPrimary={buttonStyle === style.value}
+									isPrimary={SocialIconStyle === style.value}
 									onClick={() =>
 										setAttributes({
-											buttonStyle: style.value,
+											SocialIconStyle: style.value,
 										})
 									}
 								>
@@ -322,153 +432,9 @@ const ButtonSidebar = ({ attributes, setAttributes }) => {
 							))}
 						</div>
 					</div>
-				)}
-
-				{/* Цвет кнопки */}
-				{(buttonType === 'icon' ||
-					buttonType === 'solid' ||
-					buttonType === 'circle' ||
-					buttonType === 'expand' ||
-					buttonType === 'play') &&
-					(buttonStyle === 'solid' ||
-						buttonStyle === 'outline' ||
-						buttonStyle === 'soft') && (
-						<ComboboxControl
-							label={__(
-								'Button Color',
-								'naviddev-gutenberg-blocks'
-							)}
-							value={buttonColor}
-							options={colors}
-							onChange={(newColor) =>
-								setAttributes({ buttonColor: newColor })
-							}
-						/>
-					)}
-
-				{/* Градиентный цвет */}
-				{(buttonType === 'icon' ||
-					buttonType === 'solid' ||
-					buttonType === 'circle' ||
-					buttonType === 'expand' ||
-					buttonType === 'play') &&
-					(buttonStyle === 'outline-gradient' ||
-						buttonStyle === 'gradient') && (
-						<ComboboxControl
-							label={__(
-								'Gradient Color',
-								'naviddev-gutenberg-blocks'
-							)}
-							value={buttonGradientColor}
-							options={gradientcolors}
-							onChange={(newGradient) =>
-								setAttributes({
-									buttonGradientColor: newGradient,
-								})
-							}
-						/>
-					)}
-
-				{/* Позиция иконки */}
-				{buttonType === 'icon' && (
-					<>
-						<div className="icon-position-controls button-group-sidebar_50">
-							<div className="component-sidebar-title">
-								<label>
-									{__(
-										'Icon Position',
-										'naviddev-gutenberg-blocks'
-									)}
-								</label>
-							</div>
-							<Button
-								isPrimary={buttonIconPosition === 'left'}
-								onClick={() =>
-									setAttributes({
-										buttonIconPosition: 'left',
-									})
-								}
-							>
-								{__('Left Icon', 'naviddev-gutenberg-blocks')}
-							</Button>
-							<Button
-								isPrimary={buttonIconPosition === 'right'}
-								onClick={() =>
-									setAttributes({
-										buttonIconPosition: 'right',
-									})
-								}
-							>
-								{__('Right Icon', 'naviddev-gutenberg-blocks')}
-							</Button>
-						</div>
-					</>
-				)}
-
-				{/* Иконка круга */}
-				{(buttonType === 'circle' || buttonType === 'icon') && (
-					<ComboboxControl
-						label={__('Icon Class', 'naviddev-gutenberg-blocks')}
-						value={iconClass}
-						options={fontIcons}
-						onChange={(newIcon) =>
-							setAttributes({ iconClass: newIcon })
-						}
-					/>
-				)}
-
-				{buttonType === 'social' && (
-					<ComboboxControl
-						label={__(
-							'Social Icon Class',
-							'naviddev-gutenberg-blocks'
-						)}
-						value={socialIconClass}
-						options={fontIconsSocial}
-						onChange={(newSocialIcon) =>
-							setAttributes({ socialIconClass: newSocialIcon })
-						}
-					/>
-				)}
-
-				{/* Социальные иконки */}
-				{buttonType === 'social' && (
-					<>
-						<div className="social-icon-style-controls button-group-sidebar">
-							<div className="component-sidebar-title">
-								<label>
-									{__(
-										'Social Icon Style',
-										'naviddev-gutenberg-blocks'
-									)}
-								</label>
-							</div>
-							<div className="social-icon-style-buttons">
-								{[
-									{ label: 'Style 1', value: 'style_1' },
-									{ label: 'Style 2', value: 'style_2' },
-									{ label: 'Style 3', value: 'style_3' },
-								].map((style) => (
-									<Button
-										key={style.value}
-										isPrimary={
-											socialIconStyle === style.value
-										}
-										onClick={() =>
-											setAttributes({
-												socialIconStyle: style.value,
-											})
-										}
-									>
-										{style.label}
-									</Button>
-								))}
-							</div>
-						</div>
-					</>
-				)}
-			</PanelBody>
-		</InspectorControls>
+				</>
+			)}
+		</PanelBody>
 	);
 };
 

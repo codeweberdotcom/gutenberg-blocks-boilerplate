@@ -1,12 +1,27 @@
-// Импорт необходимых зависимостей WordPress
-import { useBlockProps, RichText } from '@wordpress/block-editor';
-import { LinkTypeSelector } from '../../utilities/link_type1'; // Путь к файлу link_type1.js
+import {
+	useBlockProps,
+	RichText,
+	InspectorControls,
+} from '@wordpress/block-editor';
+import { LinkTypeSelector } from '../../utilities/link_type1';
+import { ButtonSidebar } from '../button3/sidebar';
+import { getClassNames } from '../button3/sidebar'; // Путь к файлу, где определена функция getClassNames // Путь к файлу link_type1.js
+import { __ } from '@wordpress/i18n'; // Импортируем функцию для перевода
 
 const ButtonEdit = ({ attributes, setAttributes }) => {
 	const {
+		anchor,
 		LinkUrl,
-		LinkType, // Добавляем LinkType для выбора типа ссылки
-		ButtonClass,
+		ButtonSize,
+		ButtonColor,
+		ButtonGradientColor,
+		ButtonStyle,
+		ButtonType,
+		ButtonShape,
+		ButtonIconPosition,
+		IconClass,
+		SocialIconClass,
+		SocialIconStyle,
 		LeftIcon,
 		CircleIcon,
 		ButtonContent,
@@ -16,41 +31,54 @@ const ButtonEdit = ({ attributes, setAttributes }) => {
 	} = attributes;
 
 	const onChangeLinkUrl = (newUrl) => setAttributes({ LinkUrl: newUrl });
-	const onChangeButtonClass = (newClass) =>
-		setAttributes({ ButtonClass: newClass });
 	const onChangeButtonContent = (newContent) =>
 		setAttributes({ ButtonContent: newContent });
 
-	// Указываем параметры и атрибуты кнопки
+	// Генерация класса кнопки
+	const buttonClass = getClassNames(attributes);
+
 	const blockProps = useBlockProps({
-		className: ButtonClass,
+		className: buttonClass, // Применяем сгенерированный класс
 	});
 
 	return (
 		<>
 			<div>
-				{/* Добавляем выпадающий список для LinkType */}
-				<LinkTypeSelector
-					attributes={attributes}
-					setAttributes={setAttributes}
-				/>
-
+				<InspectorControls>
+					{/* Добавляем тестовый текст для перевода */}
+					<p>
+						{__(
+							'Test text for translation in the sidebar',
+							'naviddev-gutenberg-blocks'
+						)}
+					</p>
+					{/* Добавляем выпадающий список для LinkType */}
+					<LinkTypeSelector
+						attributes={attributes}
+						setAttributes={setAttributes}
+					/>
+					<ButtonSidebar
+						attributes={attributes}
+						setAttributes={setAttributes}
+					/>
+				</InspectorControls>
 				<a
-					{...blockProps}
-					href={LinkUrl} // Используем LinkUrl как ссылку
-					className={ButtonClass}
-					onClick={(event) => event.preventDefault()} // Предотвращаем переход по ссылке в редакторе
-					data-value={DataValue} // Добавляем атрибут DataValue
+					{...useBlockProps({ className: buttonClass, id: anchor })}
+					href={LinkUrl}
+					// Применяем сгенерированный класс
+					onClick={(event) => event.preventDefault()}
+					data-value={DataValue}
 				>
 					{LeftIcon}
 					{CircleIcon}
+					{SocialIcon}
 
 					<RichText
-						tagName="span" // Обертка текста
-						value={ButtonContent} // Передаем текущее значение текста
-						onChange={onChangeButtonContent} // Обработчик изменения текста
-						placeholder="Введите текст кнопки..." // Подсказка
-						className="button-content" // Класс для стиля
+						tagName="span"
+						value={ButtonContent}
+						onChange={onChangeButtonContent}
+						placeholder="Введите текст кнопки..."
+						className="button-content"
 					/>
 
 					{RightIcon}

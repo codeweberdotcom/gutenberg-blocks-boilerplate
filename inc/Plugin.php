@@ -81,7 +81,7 @@ class Plugin
 	 */
 	public static function loadTextDomain(): void
 	{
-		load_plugin_textdomain(static::L10N, FALSE, static::L10N . '/languages');
+		load_plugin_textdomain(static::L10N, FALSE, static::L10N . '/languages/');
 	}
 
 

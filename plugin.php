@@ -40,6 +40,18 @@ function classloader($class)
 spl_autoload_register(__NAMESPACE__ . '\classloader');
 
 add_action('plugins_loaded', __NAMESPACE__ . '\Plugin::loadTextDomain');
+
+function create_block_todo_list_load_textdomain()
+{
+	load_plugin_textdomain(
+		'naviddev-gutenberg-blocks', // текстовый домен
+		false, // не ищем в системных папках
+		plugin_dir_path(__FILE__) . '/languages/' // путь к папке с переводами
+	);
+}
+add_action('init', 'create_block_todo_list_load_textdomain', 20);
+
+
 add_action('init', __NAMESPACE__ . '\Plugin::perInit', 0);
 add_action('init', __NAMESPACE__ . '\Plugin::init', 20);
 //add_action('admin_init', __NAMESPACE__ . '\Admin::init');
