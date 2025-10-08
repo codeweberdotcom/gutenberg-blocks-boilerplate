@@ -19,8 +19,13 @@ function register_page_settings()
 		if (json_last_error() === JSON_ERROR_NONE) {
 			// Регистрация каждого поля из JSON файла
 			foreach ($fields as $field_key => $field_label) {
+				// Если $field_label - массив, преобразуем его в строку
+				if (is_array($field_label)) {
+					$field_label = implode(', ', $field_label); // Преобразуем массив в строку
+				}
+
 				// Переводим метку с помощью __() функции
-				$translated_label = __($field_label, 'your-text-domain');
+				$translated_label = __($field_label, 'naviddev-gutenberg-blocks');
 
 				// Регистрируем поле с переведенной меткой
 				register_setting('page_settings_group', $field_key, [

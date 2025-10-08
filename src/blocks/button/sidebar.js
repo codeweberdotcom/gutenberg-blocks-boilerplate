@@ -5,143 +5,15 @@ import { gradientcolors } from '../../utilities/gradient_colors';
 import { shapes } from '../../utilities/shapes';
 import { fontIcons } from '../../utilities/font_icon';
 import { fontIconsSocial } from '../../utilities/font_icon_social';
-import { PanelBody, Button, ComboboxControl } from '@wordpress/components';
+import { useState, useEffect } from '@wordpress/element';
+import {
+	PanelBody,
+	Button,
+	ComboboxControl,
+	SelectControl,
+} from '@wordpress/components';
 
-// Функция для динамического формирования класса кнопки
-export const getClassNames = (attributes) => {
-	const {
-		ButtonSize,
-		ButtonColor,
-		ButtonGradientColor,
-		ButtonStyle,
-		ButtonType,
-		ButtonShape,
-		ButtonIconPosition,
-		IconClass,
-		SocialIconStyle,
-		SocialIconClass,
-		LeftIcon,
-		RightIcon,
-	} = attributes;
 
-	// Создаем массив классов
-	const classes = [];
-
-	// Добавляем класс btn
-	if (
-		ButtonType === 'solid' ||
-		ButtonType === 'circle' ||
-		ButtonType === 'expand' ||
-		ButtonType === 'play' ||
-		ButtonType === 'circle' ||
-		(ButtonType === 'social' && SocialIconStyle === 'style_1') ||
-		ButtonType === 'icon'
-	)
-		classes.push(`btn`);
-
-	// Добавляем классы размера
-	if (
-		(ButtonType === 'solid' ||
-			ButtonType === 'circle' ||
-			(ButtonType === 'social' && SocialIconStyle === 'style_1') ||
-			ButtonType === 'icon') &&
-		ButtonSize
-	)
-		classes.push(`${ButtonSize}`);
-
-	// Добавляем класс btn-circle
-	if (
-		ButtonType === 'circle' ||
-		(ButtonType === 'social' && SocialIconStyle === 'style_1') ||
-		ButtonType === 'play'
-	)
-		classes.push(`btn-circle`);
-
-	// Добавляем классы btn-play
-	if (ButtonType === 'play') classes.push(`btn-play ripple`);
-
-	// Добавляем классы btn-expand
-	if (ButtonType === 'expand') classes.push(`btn-expand rounded-pill`);
-
-	// Добавляем классы btn-icon btn-icon-start
-	if (ButtonType === 'icon' && ButtonIconPosition === 'left')
-		classes.push(`btn-icon btn-icon-start`);
-
-	// Добавляем классы btn-icon btn-icon-end
-	if (ButtonType === 'icon' && ButtonIconPosition === 'right')
-		classes.push(`btn-icon btn-icon-end`);
-
-	// Добавляем классы btn-color
-	if (
-		(ButtonType === 'solid' ||
-			ButtonType === 'circle' ||
-			ButtonType === 'icon' ||
-			ButtonType === 'expand' ||
-			ButtonType === 'play') &&
-		ButtonStyle === 'solid' &&
-		ButtonColor
-	)
-		classes.push(`btn-${ButtonColor}`);
-
-	// Добавляем классы btn-outline-color
-	if (
-		(ButtonType === 'solid' ||
-			ButtonType === 'circle' ||
-			ButtonType === 'icon' ||
-			ButtonType === 'expand' ||
-			ButtonType === 'play') &&
-		ButtonStyle === 'outline' &&
-		ButtonColor
-	)
-		classes.push(`btn-outline-${ButtonColor}`);
-
-	// Добавляем классы btn-soft-color
-	if (
-		(ButtonType === 'solid' ||
-			ButtonType === 'circle' ||
-			ButtonType === 'icon' ||
-			ButtonType === 'expand' ||
-			ButtonType === 'play') &&
-		ButtonStyle === 'soft' &&
-		ButtonColor
-	)
-		classes.push(`btn-soft-${ButtonColor}`);
-
-	// Добавляем классы btn-gradient-color
-	if (
-		(ButtonType === 'solid' ||
-			ButtonType === 'circle' ||
-			ButtonType === 'icon' ||
-			ButtonType === 'expand' ||
-			ButtonType === 'play') &&
-		ButtonStyle === 'gradient' &&
-		ButtonGradientColor
-	)
-		classes.push(`btn-${ButtonGradientColor}`);
-
-	// Добавляем классы btn-social
-	if (ButtonType === 'social' && SocialIconStyle === 'style_1')
-		classes.push(`btn-${SocialIconClass}`);
-
-	// Добавляем классы btn-outline-gradient
-	if (
-		(ButtonType === 'solid' ||
-			ButtonType === 'circle' ||
-			ButtonType === 'icon' ||
-			ButtonType === 'ezpand' ||
-			ButtonType === 'play') &&
-		ButtonStyle === 'outline-gradient' &&
-		ButtonGradientColor
-	)
-		classes.push(`btn-outline-${ButtonGradientColor}`);
-
-	// Добавляем классы btn-shape
-	if ((ButtonType === 'solid' || ButtonType === 'icon') && ButtonShape)
-		classes.push(`${ButtonShape}`);
-
-	// Объединяем массив классов в строку
-	return classes.join(' ');
-};
 
 export const ButtonSidebar = ({ attributes, setAttributes }) => {
 	const {
@@ -159,6 +31,168 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 
 	// Условие для ограничения отображения кнопок Outline, Gradient и Outline Gradient
 	const isRestrictedType = ['expand', 'social', 'play'].includes(ButtonType);
+
+	const handleButtonTypeChange = (type) => {
+		const {
+			ButtonSize,
+			ButtonColor,
+			ButtonGradientColor,
+			ButtonStyle,
+			ButtonType,
+			ButtonShape,
+			ButtonIconPosition,
+			IconClass,
+			SocialIconClass,
+			SocialIconStyle,
+			LeftIcon,
+			RightIcon,
+			CircleIcon,
+		} = attributes;
+
+		let leftIcon = '';
+		let rightIcon = '';
+		let circleIcon = '';
+
+		if (type === 'expand') {
+			leftIcon = 'uil uil-arrow-right';
+
+		} else if (type === 'play') {
+			leftIcon = 'icn-caret-right';
+
+		} else if (type === 'circle') {
+			circleIcon = IconClass || 'uil uil-arrow-right';
+		} else if (type === 'icon') {
+			if (attributes.ButtonIconPosition === 'left') {
+				leftIcon = IconClass || 'uil uil-arrow-right';
+			} else if (attributes.ButtonIconPosition === 'right') {
+				rightIcon = IconClass || 'uil uil-arrow-right';
+			}
+		}
+
+		setAttributes({
+			ButtonType: type,
+			LeftIcon: leftIcon,
+			RightIcon: '',
+			CircleIcon: circleIcon,
+		});
+	};
+
+	// Выбор размера кнокпи
+	const handleButtonSizeChange = (newSize) => {
+		setAttributes({
+			ButtonSize: newSize, // Обновляем размер кнопки
+		});
+	};
+
+	// Выбор формы кнокпи
+	const handleButtonShapeChange = (newShape) => {
+		setAttributes({
+			ButtonShape: newShape, // Обновляем форму кнопки
+		});
+	};
+
+	const handleButtonStyleChange = (newStyle) => {
+		setAttributes({
+			ButtonStyle: newStyle, // Обновляем стиль кнопки
+		});
+	};
+
+	const handleButtonColorChange = (newColor) => {
+		setAttributes({
+			ButtonColor: newColor, // Обновляем цвет кнопки
+		});
+	};
+
+const handleIconChange = (type, value) => {
+	const {
+		ButtonType,
+		ButtonIconPosition,
+		IconClass,
+		SocialIconClass,
+		SocialIconStyle,
+		LeftIcon,
+		RightIcon,
+		CircleIcon,
+	} = attributes;
+
+	let leftIcon = '';
+	let rightIcon = '';
+	let circleIcon = '';
+
+	switch (type) {
+		case 'position': {
+			// Обработка изменения позиции иконки
+			if (ButtonType === 'icon') {
+				if (ButtonIconPosition === 'left') {
+					rightIcon = IconClass;
+					leftIcon = '';
+				} else if (ButtonIconPosition === 'right') {
+					leftIcon = IconClass;
+					rightIcon = '';
+				}
+			}
+			setAttributes({
+				ButtonIconPosition: value,
+				LeftIcon: leftIcon,
+				RightIcon: rightIcon,
+				CircleIcon: circleIcon,
+			});
+			break;
+		}
+
+		case 'icon': {
+			// Обработка изменения иконки
+			if (ButtonType === 'circle') {
+				circleIcon = value;
+			} else if (ButtonType === 'icon') {
+				if (ButtonIconPosition === 'left') {
+					leftIcon = value;
+					rightIcon = '';
+				} else if (ButtonIconPosition === 'right') {
+					rightIcon = value;
+					leftIcon = '';
+				}
+			}
+			setAttributes({
+				IconClass: value,
+				LeftIcon: leftIcon,
+				RightIcon: rightIcon,
+				CircleIcon: circleIcon,
+			});
+			break;
+		}
+
+		case 'socialIconStyle': {
+			// Обработка изменения стиля социальной иконки
+			setAttributes({
+				SocialIconStyle: value,
+			});
+			break;
+		}
+
+		case 'socialIconClass': {
+
+	      let socialIconClass = '';
+			
+			if (ButtonType === 'social') {
+				if (ButtonIconPosition === 'left') {
+					socialIconClass = value;
+				} else if (ButtonIconPosition === 'right') {
+					socialIconClass = value;
+				}
+			}
+
+			setAttributes({
+				SocialIconClass: socialIconClass,
+			});
+			break;
+		}
+
+		default:
+			break;
+	}
+};
+
 
 	return (
 		<PanelBody
@@ -181,9 +215,7 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 					<Button
 						key={type.value}
 						isPrimary={ButtonType === type.value}
-						onClick={() =>
-							setAttributes({ ButtonType: type.value })
-						}
+						onClick={() => handleButtonTypeChange(type.value)}
 					>
 						{type.label}
 					</Button>
@@ -211,10 +243,8 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 								key={size.value}
 								isPrimary={ButtonSize === size.value}
 								onClick={() =>
-									setAttributes({
-										ButtonSize: size.value,
-									})
-								}
+									handleButtonSizeChange(size.value)
+								} // Используем функцию для изменения размера кнопки
 							>
 								{size.label}
 							</Button>
@@ -237,10 +267,8 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 								key={shape.value}
 								isPrimary={ButtonShape === shape.value}
 								onClick={() =>
-									setAttributes({
-										ButtonShape: shape.value,
-									})
-								}
+									handleButtonShapeChange(shape.value)
+								} // Используем функцию для изменения формы кнопки
 							>
 								{shape.label}
 							</Button>
@@ -268,10 +296,7 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 							// Отображаем кнопки Outline, Gradient и Outline Gradient только если не выбран ограниченный тип
 							...(!isRestrictedType
 								? [
-										{
-											label: 'Outline',
-											value: 'outline',
-										},
+										{ label: 'Outline', value: 'outline' },
 										{
 											label: 'Gradient',
 											value: 'gradient',
@@ -287,10 +312,8 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 								key={style.value}
 								isPrimary={ButtonStyle === style.value}
 								onClick={() =>
-									setAttributes({
-										ButtonStyle: style.value,
-									})
-								}
+									handleButtonStyleChange(style.value)
+								} // Используем функцию для изменения стиля кнопки
 							>
 								{style.label}
 							</Button>
@@ -312,9 +335,7 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 						label={__('Button Color', 'naviddev-gutenberg-blocks')}
 						value={ButtonColor}
 						options={colors}
-						onChange={(newColor) =>
-							setAttributes({ ButtonColor: newColor })
-						}
+						onChange={handleButtonColorChange} // Используем функцию для изменения цвета кнопки
 					/>
 				)}
 
@@ -355,21 +376,15 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 						</div>
 						<Button
 							isPrimary={ButtonIconPosition === 'left'}
-							onClick={() =>
-								setAttributes({
-									ButtonIconPosition: 'left',
-								})
-							}
+							onClick={() => handleIconChange('position', 'left')} // Используем универсальный обработчик
 						>
 							{__('Left Icon', 'naviddev-gutenberg-blocks')}
 						</Button>
 						<Button
 							isPrimary={ButtonIconPosition === 'right'}
 							onClick={() =>
-								setAttributes({
-									ButtonIconPosition: 'right',
-								})
-							}
+								handleIconChange('position', 'right')
+							} // Используем универсальный обработчик
 						>
 							{__('Right Icon', 'naviddev-gutenberg-blocks')}
 						</Button>
@@ -379,28 +394,27 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 
 			{/* Иконка круга */}
 			{(ButtonType === 'circle' || ButtonType === 'icon') && (
-				<ComboboxControl
+				<SelectControl
 					label={__('Icon Class', 'naviddev-gutenberg-blocks')}
 					value={IconClass}
 					options={fontIcons}
-					onChange={(newIcon) =>
-						setAttributes({ IconClass: newIcon })
-					}
+					onChange={(newIcon) => handleIconChange('icon', newIcon)} // Универсальный обработчик
 				/>
 			)}
 
+			{/* Социальные иконки */}
 			{ButtonType === 'social' && (
 				<ComboboxControl
 					label={__('Social Icon Class', 'naviddev-gutenberg-blocks')}
 					value={SocialIconClass}
 					options={fontIconsSocial}
-					onChange={(newSocialIcon) =>
-						setAttributes({ SocialIconClass: newSocialIcon })
-					}
+					onChange={(newIconClass) =>
+						handleIconChange('socialIconClass', newIconClass)
+					} // Универсальный обработчик
 				/>
 			)}
 
-			{/* Социальные иконки */}
+			{/* Социальные иконки - стиль */}
 			{ButtonType === 'social' && (
 				<>
 					<div className="social-icon-style-controls button-group-sidebar">
@@ -421,10 +435,12 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 								<Button
 									key={style.value}
 									isPrimary={SocialIconStyle === style.value}
-									onClick={() =>
-										setAttributes({
-											SocialIconStyle: style.value,
-										})
+									onClick={
+										() =>
+											handleIconChange(
+												'socialIconStyle',
+												style.value
+											) // Универсальный обработчик
 									}
 								>
 									{style.label}
@@ -437,5 +453,3 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 		</PanelBody>
 	);
 };
-
-export default ButtonSidebar;

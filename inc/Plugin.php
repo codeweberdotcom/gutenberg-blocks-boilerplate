@@ -2,8 +2,7 @@
 
 namespace Naviddev\GutenbergBlocks;
 
-class Plugin
-{
+class Plugin {
 	/**
 	 * Prefix for naming.
 	 *
@@ -23,39 +22,35 @@ class Plugin
 	 */
 	private static string $baseUrl;
 
-	public static function perInit(): void
-	{
+	public static function perInit(): void {
 		// block initialization
 		add_action('init',  __CLASS__ . '::gutenbergBlocksInit');
 	}
 
-	public static function init(): void
-	{
+	public static function init(): void {
 		// blocks category
 		if (version_compare($GLOBALS['wp_version'], '5.7', '<')) {
 			add_filter('block_categories', __CLASS__ . '::gutenbergBlocksRegisterCategory', 10, 2);
-		} else {
+		}
+		else {
 			add_filter('block_categories_all', __CLASS__ . '::gutenbergBlocksRegisterCategory', 10, 2);
 		}
 	}
 
-	public static function getBlocksName(): array
-	{
+	public static function getBlocksName(): array {
 		return [
-			'button2',
-			'button3',
+			'button'
+
 		];
 	}
 
-	public static function gutenbergBlocksInit(): void
-	{
+	public static function gutenbergBlocksInit(): void {
 		foreach (self::getBlocksName() as $block_name) {
 			register_block_type(self::getBasePath() . '/build/blocks/' . $block_name);
 		}
 	}
 
-	public static function gutenbergBlocksRegisterCategory($categories, $post): array
-	{
+	public static function gutenbergBlocksRegisterCategory($categories, $post): array {
 		return [
 			[
 				'slug'  => 'naviddev-gutenberg-blocks',
@@ -65,8 +60,7 @@ class Plugin
 		];
 	}
 
-	public static function gutenbergBlocksExternalLibraries()
-	{
+	public static function gutenbergBlocksExternalLibraries() {
 		wp_enqueue_script(
 			'gutenberg-blocks-lib',
 			GUTENBERG_BLOCKS_INC_URL . 'js/plugin.js',
@@ -79,20 +73,16 @@ class Plugin
 	/**
 	 * Loads the plugin text domain.
 	 */
-	public static function loadTextDomain(): void
-	{
+	public static function loadTextDomain(): void {
 		load_plugin_textdomain(static::L10N, FALSE, static::L10N . '/languages/');
 	}
-
-
 
 	/**
 	 * The base URL path to this plugin's folder.
 	 *
 	 * Uses plugins_url() instead of plugin_dir_url() to avoid a trailing slash.
 	 */
-	public static function getBaseUrl(): string
-	{
+	public static function getBaseUrl(): string {
 		if (!isset(static::$baseUrl)) {
 			static::$baseUrl = plugins_url('', static::getBasePath() . '/plugin.php');
 		}
@@ -104,8 +94,7 @@ class Plugin
 	 *
 	 * @return string
 	 */
-	public static function getBasePath(): string
-	{
+	public static function getBasePath(): string {
 		return dirname(__DIR__);
 	}
 }

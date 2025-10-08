@@ -3,9 +3,6 @@ export const colors = [
 	{ label: 'Primary', value: 'primary' },
 	{ label: 'Dark', value: 'dark' },
 	{ label: 'Light', value: 'light' },
-	{ label: 'Primary', value: 'primary' },
-	{ label: 'Dark', value: 'dark' },
-	{ label: 'Light', value: 'light' },
 	{ label: 'Yellow', value: 'yellow' },
 	{ label: 'Orange', value: 'orange' },
 	{ label: 'Red', value: 'red' },
@@ -25,4 +22,6 @@ export const colors = [
 	{ label: 'White', value: 'white' },
 	{ label: 'Pinterest', value: 'pinterest' },
 	{ label: 'Dewalt', value: 'dewalt' },
+	{ label: 'Facebook', value: 'facebook' },
+	{ label: 'Telegram', value: 'telegram' },
 ];
