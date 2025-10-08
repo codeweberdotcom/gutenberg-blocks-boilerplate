@@ -173,7 +173,7 @@ const handleIconChange = (type, value) => {
 		case 'socialIconClass': {
 
 	      let socialIconClass = '';
-			
+
 			if (ButtonType === 'social') {
 				if (ButtonIconPosition === 'left') {
 					socialIconClass = value;
@@ -235,9 +235,11 @@ const handleIconChange = (type, value) => {
 					</div>
 					<div className="button-size-controls button-group-sidebar_33">
 						{[
+							{ label: 'Ex Small', value: 'btn-xs' },
 							{ label: 'Small', value: 'btn-sm' },
 							{ label: 'Medium', value: '' },
 							{ label: 'Large', value: 'btn-lg' },
+							{ label: 'Ex Large', value: 'btn-elg' },
 						].map((size) => (
 							<Button
 								key={size.value}
