@@ -150,13 +150,25 @@
         },
 
 		"PhoneType": {
-            "type": "string",
-            "default": "сustom"
-        },
-		"PhoneNumber": {
-            "type": "string",
-            "default": ""
-        }
+		           "type": "string",
+		           "default": "сustom"
+		       },
+			"PhoneNumber": {
+		           "type": "string",
+		           "default": ""
+		       },
+			"LinkColor": {
+			          "type": "string",
+			          "default": "more"
+			      },
+			"LinkType": {
+			          "type": "string",
+			          "default": "hover"
+			      },
+			"LinkTextColor": {
+			          "type": "string",
+			          "default": ""
+			      }
     },
     "textdomain": "naviddev-gutenberg-blocks",
     "editorScript": "file:./index.js",

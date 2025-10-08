@@ -27,6 +27,9 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 		IconClass,
 		SocialIconClass,
 		SocialIconStyle,
+		LinkColor,
+		LinkType,
+		LinkTextColor,
 	} = attributes;
 
 	// Условие для ограничения отображения кнопок Outline, Gradient и Outline Gradient
@@ -100,6 +103,24 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 	const handleButtonColorChange = (newColor) => {
 		setAttributes({
 			ButtonColor: newColor, // Обновляем цвет кнопки
+		});
+	};
+
+	const handleLinkColorChange = (newColor) => {
+		setAttributes({
+			LinkColor: newColor, // Обновляем цвет ссылки
+		});
+	};
+
+	const handleLinkTypeChange = (newType) => {
+		setAttributes({
+			LinkType: newType, // Обновляем тип ссылки
+		});
+	};
+
+	const handleLinkTextColorChange = (newColor) => {
+		setAttributes({
+			LinkTextColor: newColor, // Обновляем цвет текста ссылки
 		});
 	};
 
@@ -211,6 +232,7 @@ const handleIconChange = (type, value) => {
 					{ label: 'Icon', value: 'icon' },
 					{ label: 'Expand', value: 'expand' },
 					{ label: 'Play', value: 'play' },
+					{ label: 'Link', value: 'link' },
 				].map((type) => (
 					<Button
 						key={type.value}
@@ -363,6 +385,64 @@ const handleIconChange = (type, value) => {
 						}
 					/>
 				)}
+
+			{/* Link Type */}
+			{ButtonType === 'link' && (
+				<div className="link-type-controls button-group-sidebar_33">
+					<div className="component-sidebar-title">
+						<label>
+							{__('Link Type', 'naviddev-gutenberg-blocks')}
+						</label>
+					</div>
+					{[
+						{ label: 'Hover', value: 'hover' },
+						{ label: 'Hover 2', value: 'hover-2' },
+						{ label: 'Hover 3', value: 'hover-3' },
+					].map((type) => (
+						<Button
+							key={type.value}
+							isPrimary={LinkType === type.value}
+							onClick={() => handleLinkTypeChange(type.value)}
+						>
+							{type.label}
+						</Button>
+					))}
+				</div>
+			)}
+
+			{/* Link Variant */}
+			{ButtonType === 'link' && (
+				<div className="link-variant-controls button-group-sidebar_33">
+					<div className="component-sidebar-title">
+						<label>
+							{__('Link Variant', 'naviddev-gutenberg-blocks')}
+						</label>
+					</div>
+					{[
+						{ label: 'Body', value: 'body' },
+						{ label: 'Default', value: 'default' },
+						{ label: 'More', value: 'more' },
+					].map((variant) => (
+						<Button
+							key={variant.value}
+							isPrimary={LinkColor === variant.value}
+							onClick={() => handleLinkColorChange(variant.value)}
+						>
+							{variant.label}
+						</Button>
+					))}
+				</div>
+			)}
+
+			{/* Link Text Color */}
+			{ButtonType === 'link' && (
+				<ComboboxControl
+					label={__('Link Text Color', 'naviddev-gutenberg-blocks')}
+					value={LinkTextColor}
+					options={colors}
+					onChange={handleLinkTextColorChange}
+				/>
+			)}
 
 			{/* Позиция иконки */}
 			{ButtonType === 'icon' && (

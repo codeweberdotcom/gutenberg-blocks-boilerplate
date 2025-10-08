@@ -12,6 +12,9 @@ export const getClassNames = (attributes) => {
 		ButtonIconPosition,
 		SocialIconStyle,
 		SocialIconClass,
+		LinkColor,
+		LinkType,
+		LinkTextColor,
 	} = attributes;
 
 	// Создаем массив классов
@@ -137,6 +140,19 @@ export const getClassNames = (attributes) => {
 	// Добавляем классы btn-shape
 	if ((ButtonType === 'solid' || ButtonType === 'icon') && ButtonShape)
 		classes.push(`${ButtonShape}`);
+
+	// Добавляем классы для link
+	if (ButtonType === 'link') {
+		classes.push(LinkType);
+		if (LinkColor === 'body') {
+			classes.push('link-body');
+		} else if (LinkColor === 'more') {
+			classes.push('more');
+		}
+		if (LinkTextColor) {
+			classes.push(`text-${LinkTextColor}`);
+		}
+	}
 
 	// Объединяем массив классов в строку
 	return classes.join(' ');
