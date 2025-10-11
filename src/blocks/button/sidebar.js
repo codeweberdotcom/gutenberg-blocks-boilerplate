@@ -28,7 +28,7 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 		SocialIconClass,
 		SocialIconStyle,
 		LinkColor,
-		LinkType,
+		HoverType,
 		LinkTextColor,
 	} = attributes;
 
@@ -70,6 +70,9 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 			} else if (attributes.ButtonIconPosition === 'right') {
 				rightIcon = IconClass || 'uil uil-arrow-right';
 			}
+		} else if (type === 'link') {
+			// Set default HoverType to 'hover' when switching to link type
+			setAttributes({ HoverType: 'hover' });
 		}
 
 		setAttributes({
@@ -112,9 +115,9 @@ export const ButtonSidebar = ({ attributes, setAttributes }) => {
 		});
 	};
 
-	const handleLinkTypeChange = (newType) => {
+	const handleHoverTypeChange = (newType) => {
 		setAttributes({
-			LinkType: newType, // Обновляем тип ссылки
+			HoverType: newType, // Обновляем тип hover эффекта
 		});
 	};
 
@@ -401,8 +404,8 @@ const handleIconChange = (type, value) => {
 					].map((type) => (
 						<Button
 							key={type.value}
-							isPrimary={LinkType === type.value}
-							onClick={() => handleLinkTypeChange(type.value)}
+							isPrimary={HoverType === type.value}
+							onClick={() => handleHoverTypeChange(type.value)}
 						>
 							{type.label}
 						</Button>

@@ -133,6 +133,19 @@ export const LinkTypeSelector = ({ attributes, setAttributes }) => {
 
 	}, [LinkType,  sitelinkurl]);
 
+	// Автоматический выбор первого модального окна, если ModalID пустой
+	useEffect(() => {
+		if (LinkType === 'modal' && modals.length > 0 && !ModalID) {
+			setAttributes({
+				ModalID: modals[0].id,
+				DataValue: `modal-${modals[0].id}`,
+				LinkUrl: 'javascript:void(0)',
+				DataBsToggle: 'modal',
+				DataBsTarget: 'modal',
+			});
+		}
+	}, [modals, ModalID, LinkType, setAttributes]);
+
 	// Функция для обработки изменения файла
   const handleFileSelect = (media) => {
     if (media && media.url) {
@@ -646,6 +659,7 @@ const handleHtml5VideoChange = (newUrl) => {
 						value={VKID}
 						onChange={handleVKIDChange}
 						placeholder="VK Video ID"
+						help="ID видео из VK в формате -ownerId_videoId"
 					/>
 				)}
 
@@ -708,7 +722,6 @@ const handleHtml5VideoChange = (newUrl) => {
 						)}
 					/>
 				)}
-
 
 				{LinkType === 'html5video' && (
 					<TextControl

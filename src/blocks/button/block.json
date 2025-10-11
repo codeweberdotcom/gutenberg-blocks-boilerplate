@@ -161,7 +161,7 @@
 			          "type": "string",
 			          "default": "more"
 			      },
-			"LinkType": {
+			"HoverType": {
 			          "type": "string",
 			          "default": "hover"
 			      },

@@ -13,7 +13,7 @@ export const getClassNames = (attributes) => {
 		SocialIconStyle,
 		SocialIconClass,
 		LinkColor,
-		LinkType,
+		HoverType,
 		LinkTextColor,
 	} = attributes;
 
@@ -143,7 +143,7 @@ export const getClassNames = (attributes) => {
 
 	// Добавляем классы для link
 	if (ButtonType === 'link') {
-		classes.push(LinkType);
+		classes.push(HoverType);
 		if (LinkColor === 'body') {
 			classes.push('link-body');
 		} else if (LinkColor === 'more') {
