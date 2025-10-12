@@ -40,31 +40,48 @@ const ButtonSave = ({ attributes }) => {
 	const hasBsTarget = DataBsTarget && DataBsTarget.trim() !== '';
 
 	return (
-		<a
-			{...useBlockProps.save({ className: buttonClass, id: anchor })}
-			href={LinkUrl}
-			data-value={DataValue || undefined}
-			{...(hasGlightbox && { 'data-glightbox': DataGlightbox })}
-			{...(hasGallery && { 'data-gallery': DataGallery })}
-			{...(hasBsToggle && { 'data-bs-toggle': DataBsToggle })}
-			{...(hasBsTarget && {
-				'data-bs-target': `#${DataBsTarget}`,
-			})}
-		>
-			{getIconComponent(LeftIcon)}
-			{getIconComponent(CircleIcon)}
-			{getIconComponent(SocialIcon)}
+		<>
+			{attributes.ButtonType === 'social' ? (
+				<nav className={`nav social${attributes.SocialIconStyle === 'style_2' ? ' social-muted' : ''}`}>
+					<a
+						href="#"
+						className={
+							attributes.SocialIconStyle === 'style_1'
+								? `btn btn-circle ${attributes.ButtonSize} btn-${attributes.SocialIconClass}`
+								: ''
+						}
+					>
+						<i className={`uil uil-${attributes.SocialIconClass}${attributes.SocialIconClass === 'facebook' ? '-f' : ''}`}></i>
+					</a>
+				</nav>
+			) : (
+				<a
+					{...useBlockProps.save({ className: buttonClass, id: anchor })}
+					href={LinkUrl}
+					data-value={DataValue || undefined}
+					{...(hasGlightbox && { 'data-glightbox': DataGlightbox })}
+					{...(hasGallery && { 'data-gallery': DataGallery })}
+					{...(hasBsToggle && { 'data-bs-toggle': DataBsToggle })}
+					{...(hasBsTarget && {
+						'data-bs-target': `#${DataBsTarget}`,
+					})}
+				>
+					{getIconComponent(LeftIcon)}
+					{getIconComponent(CircleIcon)}
+					{getIconComponent(SocialIcon)}
 
-			{!shouldHideText && (
-				<RichText.Content
-					tagName="span"
-					value={ButtonContent}
-					className="button-content"
-				/>
+					{!shouldHideText && (
+						<RichText.Content
+							tagName="span"
+							value={ButtonContent}
+							className="button-content"
+						/>
+					)}
+
+					{getIconComponent(RightIcon)}
+				</a>
 			)}
-
-			{getIconComponent(RightIcon)}
-		</a>
+		</>
 	);
 };
 

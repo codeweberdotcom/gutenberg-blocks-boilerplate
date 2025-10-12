@@ -196,7 +196,7 @@ const handleIconChange = (type, value) => {
 
 		case 'socialIconClass': {
 
-	      let socialIconClass = '';
+		     let socialIconClass = '';
 
 			if (ButtonType === 'social') {
 				if (ButtonIconPosition === 'left') {

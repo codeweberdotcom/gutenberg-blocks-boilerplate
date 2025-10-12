@@ -320,8 +320,8 @@ export const LinkTypeSelector = ({ attributes, setAttributes }) => {
 				RutubeID: '',
 				VKID: '',
 				DocumentID: '',
-				DataGlightbox: '',
-				DataGallery: 'rutube',
+				DataGlightbox: 'video',
+				DataGallery: '',
 				DataBsToggle: '',
 				DataBsTarget: '',
 			});
@@ -340,8 +340,8 @@ export const LinkTypeSelector = ({ attributes, setAttributes }) => {
 				RutubeID: '',
 				VKID: '',
 				DocumentID: '',
-				DataGlightbox: '',
-				DataGallery: 'vk',
+				DataGlightbox: 'video',
+				DataGallery: '',
 				DataBsToggle: '',
 				DataBsTarget: '',
 			});
@@ -537,18 +537,137 @@ const handleDocumentSelect = async (selectedDocumentId) => {
 	};
 
 	const handleRutubeIDChange = (newRutubeID) => {
+		let processedRutubeID = newRutubeID;
+		let extractedUrl = '';
+		let videoId = '';
+
+		// Check if the input is a full iframe embed code
+		if (newRutubeID.includes('<iframe') && newRutubeID.includes('rutube.ru')) {
+			// Extract the src URL from the iframe
+			const srcMatch = newRutubeID.match(/src="([^"]*rutube\.ru[^"]*)"/);
+			if (srcMatch) {
+				extractedUrl = srcMatch[1];
+				// Ensure the URL has the proper protocol
+				if (extractedUrl.startsWith('//')) {
+					extractedUrl = `https:${extractedUrl}`;
+				}
+				processedRutubeID = extractedUrl;
+
+				// Extract video ID from Rutube URL
+				try {
+					const urlObj = new URL(extractedUrl);
+					const pathname = urlObj.pathname;
+					const pathMatch = pathname.match(/\/embed\/([^\/]+)/);
+					if (pathMatch) {
+						videoId = pathMatch[1];
+					}
+				} catch (error) {
+					console.warn('Could not extract video ID from Rutube iframe');
+				}
+			}
+		} else if (newRutubeID.includes('rutube.ru/play/embed/')) {
+			// Handle direct URL input
+			try {
+				extractedUrl = newRutubeID.startsWith('http') ? newRutubeID : `https://${newRutubeID}`;
+				// Validate that it's a proper Rutube URL
+				const urlObj = new URL(extractedUrl);
+				if (urlObj.hostname.includes('rutube.ru') && urlObj.pathname.includes('/embed/')) {
+					processedRutubeID = extractedUrl;
+
+					// Extract video ID from URL
+					const pathname = urlObj.pathname;
+					const pathMatch = pathname.match(/\/embed\/([^\/]+)/);
+					if (pathMatch) {
+						videoId = pathMatch[1];
+					}
+				}
+			} catch (error) {
+				console.warn('Invalid Rutube URL format');
+			}
+		}
+
+		// Generate unique gallery ID for this Rutube video instance
+		const uniqueGalleryId = `rutube_${videoId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
 		setAttributes({
-			RutubeID: newRutubeID,
-			LinkUrl: 'javascript:void(0)',
-			DataValue: `rutube-${newRutubeID}`,
+			RutubeID: processedRutubeID,
+			LinkUrl: extractedUrl || 'javascript:void(0)',
+			DataValue: extractedUrl ? `rutube-${extractedUrl}` : `rutube-${processedRutubeID}`,
+			DataGallery: uniqueGalleryId,
+			DataGlightbox: 'video',
 		});
 	};
 
 	const handleVKIDChange = (newVKID) => {
+		let processedVKID = newVKID;
+		let extractedUrl = '';
+		let videoId = '';
+
+		// Check if the input is a full iframe embed code
+		if (newVKID.includes('<iframe') && newVKID.includes('vkvideo.ru')) {
+			// Extract the src URL from the iframe
+			const srcMatch = newVKID.match(/src="([^"]*vkvideo\.ru[^"]*)"/);
+			if (srcMatch) {
+				extractedUrl = srcMatch[1];
+				// Ensure the URL has the proper protocol
+				if (extractedUrl.startsWith('//')) {
+					extractedUrl = `https:${extractedUrl}`;
+				}
+				processedVKID = extractedUrl;
+
+				// Extract video ID for data-gallery
+				try {
+					const urlObj = new URL(extractedUrl);
+					const id = urlObj.searchParams.get('id');
+					if (id) {
+						videoId = id;
+					}
+				} catch (error) {
+					console.warn('Could not extract video ID from iframe');
+				}
+			}
+		} else if (newVKID.includes('vkvideo.ru/video_ext.php')) {
+			// Handle direct URL input
+			try {
+				extractedUrl = newVKID.startsWith('http') ? newVKID : `https://${newVKID}`;
+				// Validate that it's a proper VK video URL
+				const urlParams = new URL(extractedUrl);
+				if (urlParams.searchParams.has('oid') && urlParams.searchParams.has('id')) {
+					processedVKID = extractedUrl;
+
+					// Extract video ID for data-gallery
+					const id = urlParams.searchParams.get('id');
+					if (id) {
+						videoId = id;
+					}
+
+					// Generate enhanced VK video URL with additional parameters
+					const oid = urlParams.searchParams.get('oid');
+					const hash = urlParams.searchParams.get('hash') || '0f00c4ecd2885c04'; // Default hash if not present
+
+					// Build the enhanced URL with required parameters
+					const enhancedUrl = new URL(extractedUrl);
+					enhancedUrl.searchParams.set('hd', '2');
+					enhancedUrl.searchParams.set('autoplay', '1');
+					enhancedUrl.searchParams.set('allowFullscreen', 'true');
+					enhancedUrl.searchParams.set('fullscreen', 'true');
+					if (!enhancedUrl.searchParams.has('hash')) {
+						enhancedUrl.searchParams.set('hash', hash);
+					}
+
+					extractedUrl = enhancedUrl.toString();
+				}
+			} catch (error) {
+				console.warn('Invalid VK video URL format');
+			}
+		}
+
 		setAttributes({
-			VKID: newVKID,
-			LinkUrl: 'javascript:void(0)',
-			DataValue: `vkvideo-${newVKID}`,
+			VKID: processedVKID,
+			LinkUrl: extractedUrl || 'javascript:void(0)',
+			DataValue: extractedUrl ? `vkvideo-${extractedUrl}` : `vkvideo-${processedVKID}`,
+			DataGallery: `vk_${videoId}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+			DataGlightbox: 'video',
 		});
 	};
 
@@ -645,21 +764,22 @@ const handleHtml5VideoChange = (newUrl) => {
 				{/* Поля для Rutube */}
 				{LinkType === 'rutube' && (
 					<TextControl
-						label="Rutube Video ID"
+						label="Rutube Video URL or Embed Code"
 						value={RutubeID}
 						onChange={handleRutubeIDChange}
-						placeholder="Rutube ID"
+						placeholder="https://rutube.ru/play/embed/... or paste full iframe embed code"
+						help="Enter Rutube Video URL or paste full iframe embed code - the URL will be extracted automatically"
 					/>
 				)}
 
 				{/* Поля для VK */}
 				{LinkType === 'vk' && (
 					<TextControl
-						label="VK Video ID"
+						label="VK Video URL or Embed Code"
 						value={VKID}
 						onChange={handleVKIDChange}
-						placeholder="VK Video ID"
-						help="ID видео из VK в формате -ownerId_videoId"
+						placeholder="https://vkvideo.ru/video_ext.php?oid=... or paste full iframe embed code"
+						help="Enter VK Video URL or paste full iframe embed code - the URL will be extracted automatically"
 					/>
 				)}
 

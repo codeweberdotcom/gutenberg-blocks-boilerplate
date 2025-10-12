@@ -27,7 +27,7 @@ export const getClassNames = (attributes) => {
 		ButtonType === 'expand' ||
 		ButtonType === 'play' ||
 		ButtonType === 'circle' ||
-		(ButtonType === 'social' && SocialIconStyle === 'style_1') ||
+		ButtonType === 'social' ||
 		ButtonType === 'icon'
 	)
 		classes.push(`btn`);
@@ -45,7 +45,7 @@ export const getClassNames = (attributes) => {
 	if (
 		(ButtonType === 'solid' ||
 			ButtonType === 'circle' ||
-			(ButtonType === 'social' && SocialIconStyle === 'style_1') ||
+			ButtonType === 'social' ||
 			ButtonType === 'icon') &&
 		ButtonSize
 	)
@@ -54,7 +54,7 @@ export const getClassNames = (attributes) => {
 	// Добавляем класс btn-circle
 	if (
 		ButtonType === 'circle' ||
-		(ButtonType === 'social' && SocialIconStyle === 'style_1') ||
+		ButtonType === 'social' ||
 		ButtonType === 'play'
 	)
 		classes.push(`btn-circle`);
@@ -122,7 +122,7 @@ export const getClassNames = (attributes) => {
 		classes.push(`btn-${ButtonGradientColor}`);
 
 	// Добавляем классы btn-social
-	if (ButtonType === 'social' && SocialIconStyle === 'style_1')
+	if (ButtonType === 'social' && SocialIconClass)
 		classes.push(`btn-${SocialIconClass}`);
 
 	// Добавляем классы btn-outline-gradient

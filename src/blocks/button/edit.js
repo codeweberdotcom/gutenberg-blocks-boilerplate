@@ -75,36 +75,52 @@ const ButtonEdit = ({ attributes, setAttributes }) => {
 						setAttributes={setAttributes}
 					/>
 				</InspectorControls>
-				<a
-					{...useBlockProps({ className: buttonClass, id: anchor })}
-					href={LinkUrl}
-					// Применяем сгенерированный класс
-					onClick={(event) => event.preventDefault()}
-					data-value={DataValue || undefined}
-					// Добавляем атрибуты только если они есть
-					{...(hasGlightbox && { 'data-glightbox': DataGlightbox })}
-					{...(hasGallery && { 'data-gallery': DataGallery })}
-					{...(hasBsToggle && { 'data-bs-toggle': DataBsToggle })}
-					{...(hasBsTarget && {
-						'data-bs-target': `#${DataBsTarget}`,
-					})}
-				>
-					{getIconComponent(LeftIcon)}
-					{getIconComponent(CircleIcon)}
-					{getIconComponent(SocialIcon)}
+				{ButtonType === 'social' ? (
+					<nav className={`nav social${SocialIconStyle === 'style_2' ? ' social-muted' : ''}`}>
+						<a
+							href="#"
+							className={
+								SocialIconStyle === 'style_1'
+									? `btn btn-circle ${ButtonSize} btn-${SocialIconClass}`
+									: ''
+							}
+							onClick={(event) => event.preventDefault()}
+						>
+							<i className={`uil uil-${SocialIconClass}${SocialIconClass === 'facebook' ? '-f' : ''}`}></i>
+						</a>
+					</nav>
+				) : (
+					<a
+						{...useBlockProps({ className: buttonClass, id: anchor })}
+						href={LinkUrl}
+						// Применяем сгенерированный класс
+						onClick={(event) => event.preventDefault()}
+						data-value={DataValue || undefined}
+						// Добавляем атрибуты только если они есть
+						{...(hasGlightbox && { 'data-glightbox': DataGlightbox })}
+						{...(hasGallery && { 'data-gallery': DataGallery })}
+						{...(hasBsToggle && { 'data-bs-toggle': DataBsToggle })}
+						{...(hasBsTarget && {
+							'data-bs-target': `#${DataBsTarget}`,
+						})}
+					>
+						{getIconComponent(LeftIcon)}
+						{getIconComponent(CircleIcon)}
+						{getIconComponent(SocialIcon)}
 
-					{!shouldHideText && (
-						<RichText
-							tagName="span"
-							value={ButtonContent}
-							onChange={onChangeButtonContent}
-							placeholder="Введите текст кнопки..."
-							className="button-content"
-						/>
-					)}
+						{!shouldHideText && (
+							<RichText
+								tagName="span"
+								value={ButtonContent}
+								onChange={onChangeButtonContent}
+								placeholder="Введите текст кнопки..."
+								className="button-content"
+							/>
+						)}
 
-					{getIconComponent(RightIcon)}
-				</a>
+						{getIconComponent(RightIcon)}
+					</a>
+				)}
 			</div>
 		</>
 	);

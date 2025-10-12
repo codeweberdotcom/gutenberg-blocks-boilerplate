@@ -5,7 +5,7 @@
     "title": "Button",
     "category": "naviddev-gutenberg-blocks",
     "icon": "button",
-    "description": "Block button with settings.",
+    "description": "Block button with settings. Social type renders multiple social links.",
     "supports": {
         "html": false,
 		"customClassName": true,
