@@ -78,13 +78,20 @@ const ButtonEdit = ({ attributes, setAttributes }) => {
 				{ButtonType === 'social' ? (
 					<nav className={`nav social${SocialIconStyle === 'style_2' ? ' social-muted' : ''}`}>
 						<a
-							href="#"
+							href={LinkUrl}
 							className={
 								SocialIconStyle === 'style_1'
 									? `btn btn-circle ${ButtonSize} btn-${SocialIconClass}`
 									: ''
 							}
 							onClick={(event) => event.preventDefault()}
+							data-value={DataValue || undefined}
+							{...(hasGlightbox && { 'data-glightbox': DataGlightbox })}
+							{...(hasGallery && { 'data-gallery': DataGallery })}
+							{...(hasBsToggle && { 'data-bs-toggle': DataBsToggle })}
+							{...(hasBsTarget && {
+								'data-bs-target': `#${DataBsTarget}`,
+							})}
 						>
 							<i className={`uil uil-${SocialIconClass}${SocialIconClass === 'facebook' ? '-f' : ''}`}></i>
 						</a>

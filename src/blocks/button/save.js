@@ -13,6 +13,9 @@ const ButtonSave = ({ attributes }) => {
 		LinkUrl,
 		ButtonContent,
 		ButtonType,
+		ButtonSize,
+		SocialIconClass,
+		SocialIconStyle,
 		DataValue,
 		LeftIcon,
 		CircleIcon,
@@ -44,12 +47,19 @@ const ButtonSave = ({ attributes }) => {
 			{attributes.ButtonType === 'social' ? (
 				<nav className={`nav social${attributes.SocialIconStyle === 'style_2' ? ' social-muted' : ''}`}>
 					<a
-						href="#"
+						href={LinkUrl}
 						className={
 							attributes.SocialIconStyle === 'style_1'
 								? `btn btn-circle ${attributes.ButtonSize} btn-${attributes.SocialIconClass}`
 								: ''
 						}
+						data-value={DataValue || undefined}
+						{...(hasGlightbox && { 'data-glightbox': DataGlightbox })}
+						{...(hasGallery && { 'data-gallery': DataGallery })}
+						{...(hasBsToggle && { 'data-bs-toggle': DataBsToggle })}
+						{...(hasBsTarget && {
+							'data-bs-target': `#${DataBsTarget}`,
+						})}
 					>
 						<i className={`uil uil-${attributes.SocialIconClass}${attributes.SocialIconClass === 'facebook' ? '-f' : ''}`}></i>
 					</a>
