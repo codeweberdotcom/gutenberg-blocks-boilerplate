@@ -172,6 +172,6 @@
     },
     "textdomain": "naviddev-gutenberg-blocks",
     "editorScript": "file:./index.js",
-    "editorStyle": "../../index.css",
+    "editorStyle": "file:./index.css",
     "style": "file:./style-index.css"
 }

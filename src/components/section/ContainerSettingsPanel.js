@@ -1,0 +1,32 @@
+import { __ } from '@wordpress/i18n';
+import { PanelBody, SelectControl, TextControl } from '@wordpress/components';
+
+export const ContainerSettingsPanel = ({
+	containerType,
+	containerClass,
+	onContainerChange,
+}) => (
+	<PanelBody
+		title={__('Container Settings', 'naviddev-gutenberg-blocks')}
+		className="custom-panel-body"
+		initialOpen={true}
+	>
+		<SelectControl
+			label={__('Container Type', 'naviddev-gutenberg-blocks')}
+			value={containerType}
+			options={[
+				{ label: 'Container', value: 'container' },
+				{ label: 'Container Fluid', value: 'container-fluid' },
+				{ label: 'Container XXL', value: 'container-xxl' },
+			]}
+			onChange={(value) => onContainerChange('containerType', value)}
+		/>
+		<TextControl
+			label={__('Container Class', 'naviddev-gutenberg-blocks')}
+			value={containerClass}
+			onChange={(value) => onContainerChange('containerClass', value)}
+		/>
+	</PanelBody>
+);
+
+export default ContainerSettingsPanel;
