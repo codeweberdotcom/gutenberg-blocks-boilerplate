@@ -55,6 +55,7 @@ class Plugin {
 			'row',
 			'column',
 			'columns',
+			'heading-subtitle',
 		];
 	}
 

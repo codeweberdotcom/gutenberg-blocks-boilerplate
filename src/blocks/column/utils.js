@@ -102,6 +102,7 @@ export const getColumnClassNames = (attrs = {}) => {
 
 	classes.push(...getColumnBackgroundClasses(attrs));
 	classes.push(...getAdaptiveClasses(attrs));
+	classes.push(...getSpacingClasses(attrs));
 	if (columnAlignItems) {
 		classes.push(columnAlignItems.trim());
 	}
@@ -147,6 +148,36 @@ export const getAdaptiveClasses = (attrs = {}) => {
 	if (columnColXxl) {
 		classes.push(columnColXxl === 'auto' ? 'col-xxl-auto' : `col-xxl-${columnColXxl}`);
 	}
+
+	return classes;
+};
+
+export const getSpacingClasses = (attrs = {}) => {
+	const classes = [];
+	const {
+		spacingType = 'padding',
+		spacingXs,
+		spacingSm,
+		spacingMd,
+		spacingLg,
+		spacingXl,
+		spacingXxl,
+	} = attrs;
+
+	const prefix = spacingType === 'margin' ? 'm' : 'p';
+
+	const addClass = (value, infix = '') => {
+		if (value) {
+			classes.push(`${prefix}${infix}-${value}`);
+		}
+	};
+
+	addClass(spacingXs);
+	addClass(spacingSm, '-sm');
+	addClass(spacingMd, '-md');
+	addClass(spacingLg, '-lg');
+	addClass(spacingXl, '-xl');
+	addClass(spacingXxl, '-xxl');
 
 	return classes;
 };

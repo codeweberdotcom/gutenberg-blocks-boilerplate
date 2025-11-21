@@ -114,10 +114,38 @@
             "default": ""
         },
         "containerPosition": {
-            "type": "string",
-            "default": ""
+        	"type": "string",
+        	"default": ""
+        },
+        "spacingType": {
+        	"type": "string",
+        	"default": "padding"
+        },
+        "spacingXs": {
+        	"type": "string",
+        	"default": ""
+        },
+        "spacingSm": {
+        	"type": "string",
+        	"default": ""
+        },
+        "spacingMd": {
+        	"type": "string",
+        	"default": ""
+        },
+        "spacingLg": {
+        	"type": "string",
+        	"default": ""
+        },
+        "spacingXl": {
+        	"type": "string",
+        	"default": ""
+        },
+        "spacingXxl": {
+        	"type": "string",
+        	"default": ""
         }
-    },
+       },
     "textdomain": "naviddev-gutenberg-blocks",
     "editorScript": "file:./index.js",
     "editorStyle": "file:./index.css",

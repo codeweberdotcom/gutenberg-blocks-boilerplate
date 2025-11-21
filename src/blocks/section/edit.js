@@ -5,7 +5,7 @@ import {
 } from '@wordpress/block-editor';
 import { SectionSidebar } from './sidebar';
 import { __ } from '@wordpress/i18n';
-import { normalizeMinHeightClass, getContainerClassNames } from './utils';
+import { normalizeMinHeightClass, getContainerClassNames, getSpacingClasses } from './utils';
 
 const normalizeSectionId = (value = '') => value.replace(/^#/, '').trim();
 
@@ -95,6 +95,8 @@ const getSectionClasses = (attrs) => {
 	if (attrs.textColor) {
 		classes.push(attrs.textColor);
 	}
+
+	classes.push(...getSpacingClasses(attrs));
 
 	return classes.join(' ');
 };

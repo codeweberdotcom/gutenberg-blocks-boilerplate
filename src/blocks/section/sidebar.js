@@ -21,6 +21,7 @@ import { SectionSettingsPanel } from '../../components/section/SectionSettingsPa
 import { ContainerSettingsPanel } from '../../components/section/ContainerSettingsPanel';
 import BackgroundSettingsPanel from '../../components/background/BackgroundSettingsPanel';
 import { PositioningControl } from '../../components/layout/PositioningControl';
+import { SpacingControl } from '../../components/spacing/SpacingControl';
 
 export const SectionSidebar = ({ attributes, setAttributes }) => {
 	const [imageSize, setImageSize] = useState('');
@@ -54,6 +55,13 @@ export const SectionSidebar = ({ attributes, setAttributes }) => {
 		sectionClass,
 		sectionData,
 		sectionId,
+		spacingType,
+		spacingXs,
+		spacingSm,
+		spacingMd,
+		spacingLg,
+		spacingXl,
+		spacingXxl,
 	} = attributes;
 
 
@@ -187,6 +195,7 @@ export const SectionSidebar = ({ attributes, setAttributes }) => {
 	const tabs = [
 		{ name: 'section', title: 'Sec' },
 		{ name: 'background', title: 'Bg' },
+		{ name: 'spacing', title: 'Spc' },
 	];
 
 	return (
@@ -370,6 +379,21 @@ export const SectionSidebar = ({ attributes, setAttributes }) => {
 								)}
 							</PanelBody>
 						</>
+					)}
+
+					{tab.name === 'spacing' && (
+						<div style={{ padding: '16px' }}>
+							<SpacingControl
+								spacingType={spacingType}
+								spacingXs={spacingXs}
+								spacingSm={spacingSm}
+								spacingMd={spacingMd}
+								spacingLg={spacingLg}
+								spacingXl={spacingXl}
+								spacingXxl={spacingXxl}
+								onChange={(key, value) => setAttributes({ [key]: value })}
+							/>
+						</div>
 					)}
 
 					{tab.name === 'section' && (

@@ -12,13 +12,15 @@ import { PositioningControl } from '../../components/layout/PositioningControl';
 import { BlockMetaFields } from '../../components/block-meta/BlockMetaFields';
 import BackgroundSettingsPanel from '../../components/background/BackgroundSettingsPanel';
 import { AdaptiveControl } from '../../components/adaptive/AdaptiveControl';
-import { getColumnClassNames, normalizeColumnId, getColumnStyles } from './utils';
+import { SpacingControl } from '../../components/spacing/SpacingControl';
+import { getColumnClassNames, normalizeColumnId, getColumnStyles, getSpacingClasses } from './utils';
 
 const tabs = [
 	{ name: 'settings', title: 'Set' },
 	{ name: 'align', title: 'Pos' },
 	{ name: 'background', title: 'Bg' },
 	{ name: 'adaptive', title: 'Resp' },
+	{ name: 'spacing', title: 'Spc' },
 ];
 
 const ALLOWED_BLOCKS = [];
@@ -48,6 +50,13 @@ const ColumnEdit = ({ attributes, setAttributes }) => {
 		columnColLg,
 		columnColXl,
 		columnColXxl,
+		spacingType,
+		spacingXs,
+		spacingSm,
+		spacingMd,
+		spacingLg,
+		spacingXl,
+		spacingXxl,
 	} = attributes;
 
 	const [videoSize, setVideoSize] = useState('');
@@ -258,6 +267,20 @@ const ColumnEdit = ({ attributes, setAttributes }) => {
 										columnColLg={columnColLg}
 										columnColXl={columnColXl}
 										columnColXxl={columnColXxl}
+										onChange={(key, value) => setAttributes({ [key]: value })}
+									/>
+								</div>
+							)}
+							{tab.name === 'spacing' && (
+								<div style={{ padding: '16px' }}>
+									<SpacingControl
+										spacingType={spacingType}
+										spacingXs={spacingXs}
+										spacingSm={spacingSm}
+										spacingMd={spacingMd}
+										spacingLg={spacingLg}
+										spacingXl={spacingXl}
+										spacingXxl={spacingXxl}
 										onChange={(key, value) => setAttributes({ [key]: value })}
 									/>
 								</div>

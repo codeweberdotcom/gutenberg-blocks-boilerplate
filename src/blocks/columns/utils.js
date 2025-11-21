@@ -85,6 +85,7 @@ export const getColumnsClassNames = (attrs = {}, mode = 'save') => {
 	}
 
 	classes.push(...getGapClasses(attrs));
+	classes.push(...getSpacingClasses(attrs));
 
 	return classes.filter(Boolean).join(' ');
 };
@@ -120,6 +121,42 @@ export const getGapClasses = (attrs = {}) => {
 	}
 	if (columnsGapXxl) {
 		classes.push(`${prefix}-xxl-${columnsGapXxl}`);
+	}
+
+	return classes;
+};
+
+export const getSpacingClasses = (attrs = {}) => {
+	const classes = [];
+	const {
+		columnsSpacingType = 'padding',
+		columnsSpacingXs,
+		columnsSpacingSm,
+		columnsSpacingMd,
+		columnsSpacingLg,
+		columnsSpacingXl,
+		columnsSpacingXxl,
+	} = attrs;
+
+	const prefix = columnsSpacingType === 'margin' ? 'm' : 'p';
+
+	if (columnsSpacingXs) {
+		classes.push(`${prefix}-${columnsSpacingXs}`);
+	}
+	if (columnsSpacingSm) {
+		classes.push(`${prefix}-sm-${columnsSpacingSm}`);
+	}
+	if (columnsSpacingMd) {
+		classes.push(`${prefix}-md-${columnsSpacingMd}`);
+	}
+	if (columnsSpacingLg) {
+		classes.push(`${prefix}-lg-${columnsSpacingLg}`);
+	}
+	if (columnsSpacingXl) {
+		classes.push(`${prefix}-xl-${columnsSpacingXl}`);
+	}
+	if (columnsSpacingXxl) {
+		classes.push(`${prefix}-xxl-${columnsSpacingXxl}`);
 	}
 
 	return classes;

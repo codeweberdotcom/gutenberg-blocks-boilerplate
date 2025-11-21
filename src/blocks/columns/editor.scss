@@ -55,7 +55,7 @@ $gutter-scale: (
 	}
 }
 
-.naviddev-columns {
+.naviddev-column > div > div {
 	--bs-gutter-x: #{$default-gutter-x};
 	--bs-gutter-y: #{$default-gutter-y};
 	display: flex;
@@ -72,7 +72,7 @@ $gutter-scale: (
 }
 
 .naviddev-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block,
-.naviddev-columns > .block-editor-block-list__layout > .block-editor-block-list__block {
+.naviddev-columns > div > div {
 	padding-right: calc(var(--bs-gutter-x) * 0.5);
 	padding-left: calc(var(--bs-gutter-x) * 0.5);
 	margin-top: var(--bs-gutter-y);
@@ -109,22 +109,10 @@ $gutter-scale: (
 }
 
 @for $i from 1 through 12 {
-	.naviddev-column.col-#{$i} {
-		flex: 0 0 col-percentage($i);
-		max-width: col-percentage($i);
-	}
-}
-
-.naviddev-column.col-12 {
-	flex: 0 0 100%;
-	max-width: 100%;
-}
-
-@for $i from 1 through 12 {
-	@include apply-row-cols(".row.row-cols-#{$i}", $i);
-	@include apply-row-cols(".row.row-cols-sm-#{$i}", $i);
-	@include apply-row-cols(".row.row-cols-md-#{$i}", $i);
-	@include apply-row-cols(".row.row-cols-lg-#{$i}", $i);
-	@include apply-row-cols(".row.row-cols-xl-#{$i}", $i);
-	@include apply-row-cols(".row.row-cols-xxl-#{$i}", $i);
+  @include apply-row-cols(".row-cols-#{$i}", $i);
+  @include apply-row-cols(".row-cols-sm-#{$i}", $i);
+  @include apply-row-cols(".row-cols-md-#{$i}", $i);
+  @include apply-row-cols(".row-cols-lg-#{$i}", $i);
+  @include apply-row-cols(".row-cols-xl-#{$i}", $i);
+  @include apply-row-cols(".row-cols-xxl-#{$i}", $i);
 }

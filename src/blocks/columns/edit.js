@@ -18,6 +18,7 @@ import { createBlock } from '@wordpress/blocks';
 import { PositioningControl } from '../../components/layout/PositioningControl';
 import { BlockMetaFields } from '../../components/block-meta/BlockMetaFields';
 import { GapControl } from '../../components/gap/GapControl';
+import { SpacingControl } from '../../components/spacing/SpacingControl';
 import { getColumnsClassNames, normalizeColumnsData, normalizeColumnsId } from './utils';
 
 const GRID_TYPE_OPTIONS = [
@@ -88,6 +89,13 @@ const ColumnsEdit = ({ attributes, setAttributes, clientId }) => {
 		columnsGapLg,
 		columnsGapXl,
 		columnsGapXxl,
+		columnsSpacingType,
+		columnsSpacingXs,
+		columnsSpacingSm,
+		columnsSpacingMd,
+		columnsSpacingLg,
+		columnsSpacingXl,
+		columnsSpacingXxl,
 	} = attributes;
 
 	const { replaceInnerBlocks, insertBlocks } = useDispatch('core/block-editor');
@@ -120,6 +128,7 @@ const ColumnsEdit = ({ attributes, setAttributes, clientId }) => {
 		{ name: 'layout', title: 'Lay' },
 		{ name: 'align', title: 'Pos' },
 		{ name: 'gap', title: 'Gap' },
+		{ name: 'spacing', title: 'Spc' },
 		{ name: 'settings', title: 'Set' },
 	];
 
@@ -205,6 +214,20 @@ const ColumnsEdit = ({ attributes, setAttributes, clientId }) => {
 										columnsGapLg={columnsGapLg}
 										columnsGapXl={columnsGapXl}
 										columnsGapXxl={columnsGapXxl}
+										onChange={(key, value) => setAttributes({ [key]: value })}
+									/>
+								</div>
+							)}
+							{tab.name === 'spacing' && (
+								<div style={{ padding: '16px' }}>
+									<SpacingControl
+										spacingType={columnsSpacingType}
+										spacingXs={columnsSpacingXs}
+										spacingSm={columnsSpacingSm}
+										spacingMd={columnsSpacingMd}
+										spacingLg={columnsSpacingLg}
+										spacingXl={columnsSpacingXl}
+										spacingXxl={columnsSpacingXxl}
 										onChange={(key, value) => setAttributes({ [key]: value })}
 									/>
 								</div>

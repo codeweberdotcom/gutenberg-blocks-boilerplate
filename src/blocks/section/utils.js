@@ -37,3 +37,39 @@ export const getContainerClassNames = (attrs = {}) => {
 
 	return classes.join(' ').trim();
 };
+
+export const getSpacingClasses = (attrs = {}) => {
+	const classes = [];
+	const {
+		spacingType = 'padding',
+		spacingXs,
+		spacingSm,
+		spacingMd,
+		spacingLg,
+		spacingXl,
+		spacingXxl,
+	} = attrs;
+
+	const prefix = spacingType === 'margin' ? 'm' : 'p';
+
+	if (spacingXs) {
+		classes.push(`${prefix}-${spacingXs}`);
+	}
+	if (spacingSm) {
+		classes.push(`${prefix}-sm-${spacingSm}`);
+	}
+	if (spacingMd) {
+		classes.push(`${prefix}-md-${spacingMd}`);
+	}
+	if (spacingLg) {
+		classes.push(`${prefix}-lg-${spacingLg}`);
+	}
+	if (spacingXl) {
+		classes.push(`${prefix}-xl-${spacingXl}`);
+	}
+	if (spacingXxl) {
+		classes.push(`${prefix}-xxl-${spacingXxl}`);
+	}
+
+	return classes;
+};

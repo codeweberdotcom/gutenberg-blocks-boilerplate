@@ -108,6 +108,34 @@
 		"columnsGapXxl": {
 			"type": "string",
 			"default": ""
+		},
+		"columnsSpacingType": {
+			"type": "string",
+			"default": "padding"
+		},
+		"columnsSpacingXs": {
+			"type": "string",
+			"default": ""
+		},
+		"columnsSpacingSm": {
+			"type": "string",
+			"default": ""
+		},
+		"columnsSpacingMd": {
+			"type": "string",
+			"default": ""
+		},
+		"columnsSpacingLg": {
+			"type": "string",
+			"default": ""
+		},
+		"columnsSpacingXl": {
+			"type": "string",
+			"default": ""
+		},
+		"columnsSpacingXxl": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"textdomain": "naviddev-gutenberg-blocks",
